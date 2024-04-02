@@ -1,7 +1,7 @@
 import { createContext, useReducer, useState } from "react";
-import '../../firebase-config'; // Add this line prevent firebase not loading error
-import "./App.css";
-import { db } from "../../firebase-config'";
+import '../../firebase-config'; 
+import { db } from "../../firebase-config";
+import {productReducer} from'../reducers/productReducer'
 import {
   collection,
   getDocs,
@@ -10,8 +10,10 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import { PRODUCT_LOADED_FAIL,PRODUCT_LOADED_SUCCESS } from "./constants";
 export const ProductContext = createContext();
 const ProductContextProvider = ({ children }) => {
+    const productCollectionRef = collection(db, "products");
     // State
     const [productState, dispatch] = useReducer(productReducer, {
       products: [],
@@ -21,9 +23,10 @@ const ProductContextProvider = ({ children }) => {
 
     const getProduct = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/admin/getStaff`);
-        if (response.data.success) {
-          dispatch({ type: PRODUCT_LOADED_SUCCESS, payload: response.data.user });
+        const response = await getDocs(productCollectionRef);
+        const dataProducts =  response.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        if (dataProducts.length> 0) {
+          dispatch({ type: PRODUCT_LOADED_SUCCESS, payload: dataProducts });
         }
       } catch (error) {
         dispatch({ type: PRODUCT_LOADED_FAIL });

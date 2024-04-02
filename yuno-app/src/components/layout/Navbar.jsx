@@ -1,6 +1,13 @@
-import React from "react";
-
+import React, { useEffect, useContext } from "react";
+import { ProductContext } from "../context/productContext";
 const Navbar = () => {
+  const {
+    productState: { products },
+    getProduct,
+  } = useContext(ProductContext);
+  useEffect(() => {
+    getProduct();
+  }, []);
   return (
     <>
     <main>
