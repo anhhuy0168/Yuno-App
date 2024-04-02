@@ -1,12 +1,14 @@
 import { useState } from 'react'
-import './App.css'
+import '../../yuno-app/src/Style/Homepage.scss'
+import Navbar from'./components/layout/Navbar'
+import Sidebar from './components/layout/Sidebar'
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-    </>
- 
+  <>
+    <Navbar/>
+    <Sidebar/>
+  </>
+  
   )
 }
 
