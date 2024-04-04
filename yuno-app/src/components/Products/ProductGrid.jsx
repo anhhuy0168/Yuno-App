@@ -2,9 +2,9 @@ import React from 'react'
 const ProductGrid = ({randomProductsList}) => {
   return (
     <main>
-      <div class="product-container">
+      <div className="product-container">
         <div >
-        <div class="product-box">
+        <div className="product-box">
         <div className="product-main">
                 <h2 className="title">New Products</h2>
                 <div className="product-grid">

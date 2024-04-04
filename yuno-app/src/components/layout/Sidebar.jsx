@@ -167,7 +167,7 @@ const Sidebar = () => {
               </div>        
               <BestSeller product={randomProducts} />
             </div>
-            <div class="product-box">
+            <div className="product-box">
               <ViewProducts product={randomProducts} />
               <ProductBox />
               <ProductGrid randomProductsList={randomProductsList} />

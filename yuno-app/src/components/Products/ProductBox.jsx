@@ -54,7 +54,7 @@ const ProductBox = () => {
 
   return (
     <>
-      <div class="product-featured">
+      <div className="product-featured">
         <ProductDeal product={randomProductsDeal} timeCount={timeLeft} />
       </div>
     </>

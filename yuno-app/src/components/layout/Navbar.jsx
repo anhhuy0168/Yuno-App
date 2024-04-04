@@ -1,4 +1,14 @@
 import React, { useEffect, useContext } from "react";
+import { RxAvatar } from "react-icons/rx";
+import { FaShoppingBag ,FaSearch,FaHome  } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Banner from "./Banner";
+import Sidebar from "./Sidebar";
+import Testimonials from "../Products/Testimonials";
+import Blog from "./Blog";
+import Footer from "./Footer";
+import { CiGrid41 } from "react-icons/ci";
+import "../../Style/Homepage.scss"
 const Navbar = () => {
 
   return (
@@ -43,19 +53,16 @@ const Navbar = () => {
             placeholder="Enter your product name..."
           />
           <button className="search-btn">
-            <ion-icon name="search-outline" />
+            <FaSearch name="search-outline" />
           </button>
         </div>
         <div className="header-user-actions">
           <button className="action-btn">
-            <ion-icon name="person-outline" />
+            <Link to={"/login"} ><RxAvatar name="person-outline" /></Link>
+          
           </button>
           <button className="action-btn">
-            <ion-icon name="heart-outline" />
-            <span className="count">0</span>
-          </button>
-          <button className="action-btn">
-            <ion-icon name="bag-handle-outline" />
+            <FaShoppingBag name="bag-handle-outline" />
             <span className="count">0</span>
           </button>
         </div>
@@ -286,22 +293,15 @@ const Navbar = () => {
       </div>
     </nav>
     <div className="mobile-bottom-navigation">
-      <button className="action-btn" data-mobile-menu-open-btn="">
-        <ion-icon name="menu-outline" />
-      </button>
       <button className="action-btn">
-        <ion-icon name="bag-handle-outline" />
+      <FaShoppingBag name="bag-handle-outline" />
         <span className="count">0</span>
       </button>
       <button className="action-btn">
-        <ion-icon name="home-outline" />
-      </button>
-      <button className="action-btn">
-        <ion-icon name="heart-outline" />
-        <span className="count">0</span>
+        <FaHome name="home-outline" />
       </button>
       <button className="action-btn" data-mobile-menu-open-btn="">
-        <ion-icon name="grid-outline" />
+        <CiGrid41 name="grid-outline" />
       </button>
     </div>
     <nav className="mobile-navigation-menu  has-scrollbar" data-mobile-menu="">
@@ -455,7 +455,11 @@ const Navbar = () => {
     </nav>
       </header>
     </main>
-   
+   <Banner/>
+   <Sidebar/>
+   <Testimonials/>
+   <Blog/>
+   <Footer/>
     </>
   );
 };

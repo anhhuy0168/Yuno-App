@@ -1,8 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
 const ProductDeal = ({ product, timeCount }) => {
-    console.log(product);
-    console.log(timeCount);
   return (
     <div className="product-featured">
     <h2 className="title">Deal of the day</h2>
