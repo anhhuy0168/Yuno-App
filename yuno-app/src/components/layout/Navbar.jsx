@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { RxAvatar } from "react-icons/rx";
-import { FaShoppingBag ,FaSearch,FaHome  } from "react-icons/fa";
+import { FaShoppingBag ,FaSearch,FaHome,FaRegUserCircle   } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Banner from "./Banner";
 import Sidebar from "./Sidebar";
@@ -58,7 +58,7 @@ const Navbar = () => {
         </div>
         <div className="header-user-actions">
           <button className="action-btn">
-            <Link to={"/login"} ><RxAvatar name="person-outline" /></Link>
+            <Link to={"/login"} ><FaRegUserCircle name="person-outline" style={{color:"white"}} /></Link>
           
           </button>
           <button className="action-btn">

@@ -2,6 +2,7 @@ import React, { useState,useContext } from "react";
 import Register from "./Register";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
+import LoginGoogle from "./LoginGoogle";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,6 +21,7 @@ const Login = () => {
   return (
 <>
 <Register/>
+<LoginGoogle/>
     <div className="sign-in-container">
       <form onSubmit={signIn}>
         <h1>Log In to your Account</h1>
