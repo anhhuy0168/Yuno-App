@@ -3,6 +3,7 @@ import Register from "./Register";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 import LoginGoogle from "./LoginGoogle";
+import { Link } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +17,7 @@ const Login = () => {
     Login(email, password)
     if (user?.user?.accessToken) {
       navigate("/")
+      console.log(user?.user)
     }
   };
   return (
@@ -37,7 +39,7 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></input>
-        <button type="submit">Log In</button>
+        <button type="submit"><Link to={"/"}>Log In</Link> </button>
       </form>
     </div>
 </>

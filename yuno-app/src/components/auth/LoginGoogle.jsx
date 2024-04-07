@@ -2,8 +2,11 @@ import React from 'react'
 import { useState } from 'react';
 import { signInWithPopup } from 'firebase/auth';
 import { auth ,provider} from '../../firebase-config';
+import { useNavigate } from "react-router-dom";
+
 const LoginGoogle = () => {
-  
+  const navigate = useNavigate();
+
     const [user, setUser] = useState(null);
 
     const handleGoogleSignIn=()=>{
@@ -11,11 +14,11 @@ const LoginGoogle = () => {
         const user = result.user;
         console.log(user);
         setUser(user);
+        navigate("/")
       }).catch((err)=>{
         console.log(err);
       })
     }
-  
     const handleLogout=()=>{
       setUser(null);
     }
