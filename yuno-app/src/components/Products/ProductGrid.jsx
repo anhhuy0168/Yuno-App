@@ -1,4 +1,6 @@
 import React from 'react'
+import ProductDetail from './ProductDetail'
+import { Link } from 'react-router-dom'
 const ProductGrid = ({randomProductsList}) => {
   return (
     <main>
@@ -9,8 +11,9 @@ const ProductGrid = ({randomProductsList}) => {
                 <h2 className="title">New Products</h2>
                 <div className="product-grid">
                   {randomProductsList.map((product, index) => (
-                    <div className="showcase" key={index}>
-                      <div className="showcase-banner">
+                    <div className="showcase" key={index} style={{cursor:"pointer"}}>
+                          <Link to={`/productDetail/${product.id}`}>
+                          <div className="showcase-banner">
                         <img
                           src={product.productImage}
                           alt={product.productName}
@@ -34,18 +37,20 @@ const ProductGrid = ({randomProductsList}) => {
                             {product.productName}
                           </h3>
                         </a>
-                        <div className="showcase-rating">
+                        {/* <div className="showcase-rating">
                           <ion-icon name="star" />
                           <ion-icon name="star" />
                           <ion-icon name="star" />
                           <ion-icon name="star-outline" />
                           <ion-icon name="star-outline" />
-                        </div>
+                        </div> */}
                         <div className="price-box">
                           <p className="price">${product.salePrice}</p>
                           <del>${product.currentPrice}</del>
                         </div>
                       </div>
+                    </Link>
+                      
                     </div>
                   ))}
                 </div>
