@@ -1,17 +1,23 @@
-import {  USER_REGISTER_SUCCESS,USER_REGISTER_FAIL,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL} from "../context/constants";
+import {  GET_USER_SUCCESS,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL} from "../context/constants";
 export const authReducer = (state, action) => {
     const { type, payload } = action;
     switch (type) {
         case USER_LOGIN_SUCCESS:
           return {
             ...state,
-            user: payload,
+            listUser: payload,
           };
         case USER_LOGIN_FAIL:
           return {
             ...state,
-            user: [],
+            listUser: [],
           };
+          case GET_USER_SUCCESS:
+            console.log(payload);
+            return {
+              ...state,
+              user: payload,
+            };
       default:
         return state;
     }

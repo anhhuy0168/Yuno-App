@@ -12,14 +12,16 @@ const Login = () => {
     userState: { user },
     Login,
   } = useContext(AuthContext);
-  const signIn = (e) => {
+  const signIn = async (e) => {
     e.preventDefault();
-    Login(email, password)
-    if (user?.user?.accessToken) {
-      navigate("/")
-      console.log(user?.user)
+    try {
+      await Login(email, password);
+      navigate("/");
+    } catch (error) {
+      console.error("Đã xảy ra lỗi khi đăng nhập:", error);
     }
   };
+  
   return (
 <>
 <Register/>
@@ -39,7 +41,7 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></input>
-        <button type="submit"><Link to={"/"}>Log In</Link> </button>
+        <button type="submit">Log In</button>
       </form>
     </div>
 </>

@@ -16,7 +16,7 @@ import { CiGrid41 } from "react-icons/ci";
 import "../../Style/Homepage.scss";
 import { AuthContext } from "../context/authContext";
 const Navbar = () => {
-  const { userState } = useContext(AuthContext);
+  const {userState:listUser } = useContext(AuthContext);
   return (
     <>
       <main>
@@ -65,18 +65,21 @@ const Navbar = () => {
               <div className="header-user-actions">
                 <button className="action-btn">
                   <Link to={"/login"}>
-                    {userState.user.length === 0 ? (
-                      <FaRegUserCircle
-                        name="person-outline"
-                        style={{ color: "white" }}
-                      />
+                    {listUser?.user? (
+                       <FaRegUserCircle
+                       name="person-outline"
+                       style={{ color: "white" }}
+                     />
+                       
                     ) : (
-                      <span>{userState.user.user.email}</span>
+                      <span>{listUser?.user?.email}</span>
                     )}
                   </Link>
                 </button>
                 <button className="action-btn">
-                  <FaShoppingBag name="bag-handle-outline" />
+                  <Link to={"/productCart/:id"}>
+                  <FaShoppingBag name="bag-handle-outline" style={{color:"white"}} />
+                  </Link>
                   <span className="count">0</span>
                 </button>
               </div>
