@@ -12,7 +12,11 @@ const LoginGoogle = () => {
     const handleGoogleSignIn=()=>{
       signInWithPopup(auth, provider).then((result)=>{
         const user = result.user;
-        console.log(user);
+        localStorage.setItem('user', JSON.stringify({
+          email: user.email,
+          uid: user.uid,
+          accessToken: user.accessToken
+        }));
         setUser(user);
         navigate("/")
       }).catch((err)=>{

@@ -13,7 +13,6 @@ export const authReducer = (state, action) => {
             listUser: [],
           };
           case GET_USER_SUCCESS:
-            console.log(payload);
             return {
               ...state,
               user: payload,

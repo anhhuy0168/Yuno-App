@@ -72,7 +72,7 @@ const Navbar = () => {
                     ) : (
                       <FaRegUserCircle
                         name="person-outline"
-                        style={{ color: "white" }}
+                        style={{ color: "red" }}
                       />
                     )}
                   </Link>
@@ -81,7 +81,7 @@ const Navbar = () => {
                   <Link to={User ? "/productCart" : "/login"}>
                     <FaShoppingBag
                       name="bag-handle-outline"
-                      style={{ color: "white" }}
+                      style={{ color: "red" }}
                     />
                   </Link>
                 </button>
