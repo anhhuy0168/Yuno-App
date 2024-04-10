@@ -13,7 +13,7 @@ const Testimonials = () => {
             <h2 className="title">testimonial</h2>
             <div className="testimonial-card">
               <img
-                src="../src/assets/images/testimonial-1.jpg"
+                src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1712735915/testimonial-1_dahpjz.jpg"
                 alt="alan doe"
                 className="testimonial-banner"
                 width={80}
@@ -22,7 +22,7 @@ const Testimonials = () => {
               <p className="testimonial-name">Alan Doe</p>
               <p className="testimonial-title">CEO &amp; Founder Invision</p>
               <img
-                src="../src/assets/images/icons/quotes.svg"
+                src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1712735944/quotes_ej7x2l.svg"
                 alt="quotation"
                 className="quotation-img"
                 width={26}
@@ -38,7 +38,7 @@ const Testimonials = () => {
     */}
           <div className="cta-container">
             <img
-              src="../src/assets/images/cta-banner.jpg"
+              src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1712735993/cta-banner_wurone.jpg"
               alt="summer collection"
               className="cta-banner"
             />
