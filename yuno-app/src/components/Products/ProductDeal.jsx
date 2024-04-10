@@ -55,10 +55,6 @@ const ProductDeal = ({ product, timeCount }) => {
               </p>
               <div className="countdown">
                 <div className="countdown-content">
-                  <p className="display-number">{timeCount.days}</p>
-                  <p className="display-text">Days</p>
-                </div>
-                <div className="countdown-content">
                   <p className="display-number">{timeCount.hours}</p>
                   <p className="display-text">Hours</p>
                 </div>
@@ -128,10 +124,6 @@ const ProductDeal = ({ product, timeCount }) => {
                 Hurry Up! Offer ends in:
               </p>
               <div className="countdown">
-                <div className="countdown-content">
-                  <p className="display-number">{timeCount.days}</p>
-                  <p className="display-text">Days</p>
-                </div>
                 <div className="countdown-content">
                   <p className="display-number">{timeCount.hours}</p>
                   <p className="display-text">Hours</p>

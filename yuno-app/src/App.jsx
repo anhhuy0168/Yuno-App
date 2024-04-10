@@ -6,6 +6,7 @@ import AuthContextProvider from "./components/context/authContext";
 import ProductDetail from "./components/Products/ProductDetail";
 import ProductCart from "./components/Products/ProductCart";
 import CartContextProvider from "./components/context/cartContext";
+import Profile from "./components/auth/Profile";
 function App() {
   return (
     <>
@@ -18,6 +19,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/productDetail/:id" element={<ProductDetail />} />
                 <Route path="/productCart/:id" element={<ProductCart />} />
+                <Route path="/profile" element={<Profile />} />
+                {/* <Route path="/payment" element={<Payment />} /> */}
               </Routes>
             </BrowserRouter>
           </CartContextProvider>

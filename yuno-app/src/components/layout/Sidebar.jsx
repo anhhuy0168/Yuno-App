@@ -33,7 +33,7 @@ const Sidebar = () => {
         <div className="product-container">
           <div className="container">
             <div className="sidebar has-scrollbar" data-mobile-menu="">
-              <div className="sidebar-category">
+              {/* <div className="sidebar-category">
                 <div className="sidebar-top">
                   <h2 className="sidebar-title">Category</h2>
                   <button
@@ -164,7 +164,7 @@ const Sidebar = () => {
                     </button>
                   </li>
                 </ul>
-              </div>        
+              </div>         */}
               <BestSeller product={randomProducts} />
             </div>
             <div className="product-box">

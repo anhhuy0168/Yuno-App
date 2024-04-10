@@ -1,5 +1,4 @@
-import React, { useEffect, useContext } from "react";
-import { RxAvatar } from "react-icons/rx";
+import React from "react";
 import {
   FaShoppingBag,
   FaSearch,
@@ -14,9 +13,9 @@ import Blog from "./Blog";
 import Footer from "./Footer";
 import { CiGrid41 } from "react-icons/ci";
 import "../../Style/Homepage.scss";
-import { AuthContext } from "../context/authContext";
+import useUserFromLocalStorage from "../../hook/useUserFromLocalStorage";
 const Navbar = () => {
-  const {userState:listUser } = useContext(AuthContext);
+  const User = useUserFromLocalStorage();
   return (
     <>
       <main>
@@ -65,22 +64,22 @@ const Navbar = () => {
               <div className="header-user-actions">
                 <button className="action-btn">
                   <Link to={"/login"}>
-                    {listUser?.user? (
-                       <FaRegUserCircle
-                       name="person-outline"
-                       style={{ color: "white" }}
-                     />
-                       
+                    {User? (
+                      <Link to={"/profile"}>
+                                <span>{User.email}</span>                    
+                      </Link>
                     ) : (
-                      <span>{listUser?.user?.email}</span>
+                      <FaRegUserCircle
+                      name="person-outline"
+                      style={{ color: "white" }}
+                    />
                     )}
                   </Link>
                 </button>
                 <button className="action-btn">
-                  <Link to={"/productCart/:id"}>
+                     <Link to={User ? "/productCart/:id" : "/login"}>
                   <FaShoppingBag name="bag-handle-outline" style={{color:"white"}} />
                   </Link>
-                  <span className="count">0</span>
                 </button>
               </div>
             </div>

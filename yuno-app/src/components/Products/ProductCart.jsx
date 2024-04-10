@@ -1,19 +1,16 @@
 import React from "react";
 import { CartContext } from "../context/cartContext";
 import { useContext, useEffect, useState } from "react";
-import { getUserFromLocalStorage } from "../localStorage";
+import useUserFromLocalStorage from "../../hook/useUserFromLocalStorage";
 import { ProductContext } from "../context/productContext";
+import Payment from "../auth/Payment";
 const ProductCart = () => {
   const { cartState, getCart } = useContext(CartContext);
-  const [user, setUser] = useState(null);
+  const user = useUserFromLocalStorage();
   const {
     productState: { products },
     getProduct,
   } = useContext(ProductContext);
-  useEffect(() => {
-    const userFromLocalStorage = getUserFromLocalStorage();
-    setUser(userFromLocalStorage);
-  }, []);
   useEffect(() => {
     getCart();
     getProduct();
@@ -23,6 +20,7 @@ const ProductCart = () => {
   );
   const productIds = filteredCarts.map((cart) => cart.productIds).join(",");
   const productCart = products.filter((product) => product.id === productIds);
+
   return (
     <>
   <div className="small-container cart-page">
@@ -73,7 +71,7 @@ const ProductCart = () => {
       </table>
     </div>
   </div>
-
+<Payment/>
 </>
 
   )
