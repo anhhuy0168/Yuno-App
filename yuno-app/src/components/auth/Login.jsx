@@ -3,7 +3,7 @@ import Register from "./Register";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 import LoginGoogle from "./LoginGoogle";
-import { Link } from "react-router-dom";
+import NavBarMobile from "../layout/NavBarMobile";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +44,7 @@ const Login = () => {
         <button type="submit">Log In</button>
       </form>
     </div>
+    <NavBarMobile/>
 </>
   );
 };

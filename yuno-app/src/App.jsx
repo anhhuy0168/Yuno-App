@@ -7,6 +7,7 @@ import ProductDetail from "./components/Products/ProductDetail";
 import ProductCart from "./components/Products/ProductCart";
 import CartContextProvider from "./components/context/cartContext";
 import Profile from "./components/auth/Profile";
+import ChangePass from "./components/auth/ChangePass";
 function App() {
   return (
     <>
@@ -18,9 +19,9 @@ function App() {
                 <Route path="/" element={<Navbar />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/productDetail/:id" element={<ProductDetail />} />
-                <Route path="/productCart/:id" element={<ProductCart />} />
+                <Route path="/productCart" element={<ProductCart />} />
                 <Route path="/profile" element={<Profile />} />
-                {/* <Route path="/payment" element={<Payment />} /> */}
+                <Route path="/changePass" element={<ChangePass />} />
               </Routes>
             </BrowserRouter>
           </CartContextProvider>

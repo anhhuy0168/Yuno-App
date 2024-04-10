@@ -14,6 +14,7 @@ import Footer from "./Footer";
 import { CiGrid41 } from "react-icons/ci";
 import "../../Style/Homepage.scss";
 import useUserFromLocalStorage from "../../hook/useUserFromLocalStorage";
+import NavBarMobie from "./NavBarMobile";
 const Navbar = () => {
   const User = useUserFromLocalStorage();
   return (
@@ -64,21 +65,24 @@ const Navbar = () => {
               <div className="header-user-actions">
                 <button className="action-btn">
                   <Link to={"/login"}>
-                    {User? (
+                    {User ? (
                       <Link to={"/profile"}>
-                                <span>{User.email}</span>                    
+                        <span>{User.email}</span>
                       </Link>
                     ) : (
                       <FaRegUserCircle
-                      name="person-outline"
-                      style={{ color: "white" }}
-                    />
+                        name="person-outline"
+                        style={{ color: "white" }}
+                      />
                     )}
                   </Link>
                 </button>
                 <button className="action-btn">
-                     <Link to={User ? "/productCart/:id" : "/login"}>
-                  <FaShoppingBag name="bag-handle-outline" style={{color:"white"}} />
+                  <Link to={User ? "/productCart" : "/login"}>
+                    <FaShoppingBag
+                      name="bag-handle-outline"
+                      style={{ color: "white" }}
+                    />
                   </Link>
                 </button>
               </div>
@@ -308,170 +312,31 @@ const Navbar = () => {
               </ul>
             </div>
           </nav>
-          <div className="mobile-bottom-navigation">
+          {/* <div className="mobile-bottom-navigation">
             <button className="action-btn">
-              <FaShoppingBag name="bag-handle-outline" />
-              <span className="count">0</span>
+              <Link to={"/productCart"}>
+                <FaShoppingBag
+                  name="bag-handle-outline"
+                  style={{ color: "white" }}
+                />
+                <span className="count">0</span>
+              </Link>
             </button>
             <button className="action-btn">
-              <FaHome name="home-outline" />
+              <Link to={"/"}>
+                <FaHome name="home-outline" style={{ color: "white" }} />
+              </Link>
             </button>
             <button className="action-btn" data-mobile-menu-open-btn="">
-              <CiGrid41 name="grid-outline" />
+              <Link to={"/login"}>
+                <FaRegUserCircle
+                  name="person-outline"
+                  style={{ color: "white" }}
+                />
+              </Link>
             </button>
-          </div>
-          <nav
-            className="mobile-navigation-menu  has-scrollbar"
-            data-mobile-menu=""
-          >
-            <div className="menu-top">
-              <h2 className="menu-title">Menu</h2>
-              <button className="menu-close-btn" data-mobile-menu-close-btn="">
-                <ion-icon name="close-outline" />
-              </button>
-            </div>
-            <ul className="mobile-menu-category-list">
-              <li className="menu-category">
-                <a href="#" className="menu-title">
-                  Home
-                </a>
-              </li>
-              <li className="menu-category">
-                <button className="accordion-menu" data-accordion-btn="">
-                  <p className="menu-title">Men's</p>
-                  <div>
-                    <ion-icon name="add-outline" className="add-icon" />
-                    <ion-icon name="remove-outline" className="remove-icon" />
-                  </div>
-                </button>
-                <ul className="submenu-category-list" data-accordion="">
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Shirt
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Shorts &amp; Jeans
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Safety Shoes
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Wallet
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li className="menu-category">
-                <button className="accordion-menu" data-accordion-btn="">
-                  <p className="menu-title">Women's</p>
-                  <div>
-                    <ion-icon name="add-outline" className="add-icon" />
-                    <ion-icon name="remove-outline" className="remove-icon" />
-                  </div>
-                </button>
-                <ul className="submenu-category-list" data-accordion="">
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Dress &amp; Frock
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Earrings
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Necklace
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Makeup Kit
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li className="menu-category">
-                <button className="accordion-menu" data-accordion-btn="">
-                  <p className="menu-title">Jewelry</p>
-                  <div>
-                    <ion-icon name="add-outline" className="add-icon" />
-                    <ion-icon name="remove-outline" className="remove-icon" />
-                  </div>
-                </button>
-                <ul className="submenu-category-list" data-accordion="">
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Earrings
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Couple Rings
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Necklace
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Bracelets
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li className="menu-category">
-                <button className="accordion-menu" data-accordion-btn="">
-                  <p className="menu-title">Perfume</p>
-                  <div>
-                    <ion-icon name="add-outline" className="add-icon" />
-                    <ion-icon name="remove-outline" className="remove-icon" />
-                  </div>
-                </button>
-                <ul className="submenu-category-list" data-accordion="">
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Clothes Perfume
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Deodorant
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Flower Fragrance
-                    </a>
-                  </li>
-                  <li className="submenu-category">
-                    <a href="#" className="submenu-title">
-                      Air Freshener
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li className="menu-category">
-                <a href="#" className="menu-title">
-                  Blog
-                </a>
-              </li>
-              <li className="menu-category">
-                <a href="#" className="menu-title">
-                  Hot Offers
-                </a>
-              </li>
-            </ul>
-          </nav>
+          </div> */}
+          <NavBarMobie/>
         </header>
       </main>
       <Banner />

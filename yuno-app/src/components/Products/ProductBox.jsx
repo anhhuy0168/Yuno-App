@@ -2,7 +2,6 @@ import React from "react";
 import { ProductContext } from "../context/productContext";
 import { useEffect, useContext, useState } from "react";
 import ProductDeal from "./ProductDeal";
-import ProductGrid from "./ProductGrid";
 const ProductBox = () => {
   const [randomProductsDeal, setRandomProductsDeal] = useState([]);
   const [timeLeft, setTimeLeft] = useState({

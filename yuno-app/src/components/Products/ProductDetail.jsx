@@ -6,6 +6,7 @@ import { useContext, useEffect ,useState} from "react";
 import { ProductContext } from "../context/productContext";
 import { CartContext } from "../context/cartContext";
 import { getUserFromLocalStorage } from "../localStorage";
+import NavBarMobile from "../layout/NavBarMobile";
 const Wrapper = styled.section`
   .products-details {
     margin-top: 80px;
@@ -188,6 +189,7 @@ const ProductDetail = () => {
     </div>
   </div> */}
       </div>
+      <NavBarMobile/>
     </Wrapper>
   );
 };

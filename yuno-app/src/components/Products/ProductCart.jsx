@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import useUserFromLocalStorage from "../../hook/useUserFromLocalStorage";
 import { ProductContext } from "../context/productContext";
 import Payment from "../auth/Payment";
+import NavBarMobile from "../layout/NavBarMobile";
 const ProductCart = () => {
   const { cartState, getCart } = useContext(CartContext);
   const user = useUserFromLocalStorage();
@@ -20,6 +21,9 @@ const ProductCart = () => {
   );
   const productIds = filteredCarts.map((cart) => cart.productIds).join(",");
   const productCart = products.filter((product) => product.id === productIds);
+  useEffect(() => {
+    localStorage.setItem("cartTotalQuantity", filteredCarts.length);
+  }, [filteredCarts]);
 
   return (
     <>
@@ -72,6 +76,7 @@ const ProductCart = () => {
     </div>
   </div>
 <Payment/>
+<NavBarMobile/>
 </>
 
   )

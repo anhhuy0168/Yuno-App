@@ -1,5 +1,4 @@
 import React from 'react'
-import ProductDetail from './ProductDetail'
 import { Link } from 'react-router-dom'
 const ProductGrid = ({randomProductsList}) => {
   return (
