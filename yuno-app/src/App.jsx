@@ -8,6 +8,8 @@ import ProductCart from "./components/Products/ProductCart";
 import CartContextProvider from "./components/context/cartContext";
 import Profile from "./components/auth/Profile";
 import ChangePass from "./components/auth/ChangePass";
+import Footer from "./components/layout/Footer";
+import SignInAndUp from "./components/auth/SignInAndUp";
 function App() {
   return (
     <>
@@ -22,7 +24,9 @@ function App() {
                 <Route path="/productCart" element={<ProductCart />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/changePass" element={<ChangePass />} />
+                <Route path="/account" element={<SignInAndUp />} />
               </Routes>
+              <Footer/>
             </BrowserRouter>
           </CartContextProvider>
         </ProductContextProvider>

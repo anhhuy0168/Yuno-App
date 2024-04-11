@@ -1,10 +1,11 @@
 import React from 'react'
-import { useState } from 'react';
+import { Carousel } from "antd";
 const ProductDeal = ({ product, timeCount }) => {
   return (
     <div className="product-featured">
     <h2 className="title">Deal of the day</h2>
     <div className="showcase-wrapper has-scrollbar">
+      
       <div className="showcase-container">
         <div className="showcase">
           <div className="showcase-banner">

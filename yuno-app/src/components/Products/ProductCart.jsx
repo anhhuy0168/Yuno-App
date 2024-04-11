@@ -1,10 +1,12 @@
 import React from "react";
 import { CartContext } from "../context/cartContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import useUserFromLocalStorage from "../../hook/useUserFromLocalStorage";
 import { ProductContext } from "../context/productContext";
 import Payment from "../auth/Payment";
 import NavBarMobile from "../layout/NavBarMobile";
+import Wapper from"../../Style/ProductCartStyle"
+import Header from "../layout/Header"
 const ProductCart = () => {
   const { cartState, getCart } = useContext(CartContext);
   const user = useUserFromLocalStorage();
@@ -27,7 +29,9 @@ const ProductCart = () => {
 
   return (
     <>
-  <div className="small-container cart-page">
+    <Header/>
+    <Wapper>
+    <div className="small-container cart-page">
     <table>
       <tbody>
         <tr>
@@ -71,11 +75,12 @@ const ProductCart = () => {
             <td>Total</td>
             <td>${productCart.reduce((total, product) => total + product.salePrice, 0) + 30}.00</td>
           </tr>
+          <Payment/>
         </tbody>
       </table>
     </div>
   </div>
-<Payment/>
+    </Wapper>
 <NavBarMobile/>
 </>
 

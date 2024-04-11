@@ -1,55 +1,12 @@
 import React from "react";
-// import Wrapper from "../../Style/ProductDetailStyle"
+import Wrapper from "../../Style/ProductDetailStyle"
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import { useContext, useEffect ,useState} from "react";
 import { ProductContext } from "../context/productContext";
 import { CartContext } from "../context/cartContext";
 import { getUserFromLocalStorage } from "../localStorage";
 import NavBarMobile from "../layout/NavBarMobile";
-const Wrapper = styled.section`
-  .products-details {
-    margin-top: 80px;
-  }
-  .products-details .col-2 img {
-    padding: 0;
-  }
-  .products-details .col-2 {
-    padding: 20px;
-  }
-  .products-details h4 {
-    margin: 20px 0;
-    font-size: 22px;
-    font-weight: bold;
-  }
-  .products-details select {
-    display: block;
-    padding: 10px;
-    margin-top: 20px;
-  }
-  .products-details input {
-    width: 50px;
-    height: 40px;
-    padding-left: 10px;
-    font-size: 20px;
-  }
-  input:focus {
-    outline: none;
-  }
-  .products-details .fa {
-    color: deeppink;
-    margin-left: 5px;
-  }
-
-  .small-img-row {
-    display: flex;
-    justify-content: space-between;
-  }
-  .small-img-col {
-    flex-basis: 24%;
-    cursor: pointer;
-  }
-`;
+import Header from "../layout/Header";
 const ProductDetail = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
@@ -78,8 +35,10 @@ const ProductDetail = () => {
   }, []);
 
   return (
-    <Wrapper>
-      <div className="small-container products-details">
+   <>
+   <Header/>
+   <Wrapper>
+   <div className="small-container products-details">
         <div className="row">
           <div className="col-2">
             <img
@@ -87,20 +46,6 @@ const ProductDetail = () => {
               width="100%"
               id="ProductImg"
             />
-            {/* <div className="small-img-row">
-        <div className="small-img-col">
-          <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" width="100%" className="small-img" />
-        </div>
-        <div className="small-img-col">
-          <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" width="100%" className="small-img" />
-        </div>
-        <div className="small-img-col">
-          <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" width="100%" className="small-img" />
-        </div>
-        <div className="small-img-col">
-          <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" width="100%" className="small-img" />
-        </div>
-      </div> */}
           </div>
           <div className="col-2">
             <p>{selectedProduct?.category}</p>
@@ -116,6 +61,9 @@ const ProductDetail = () => {
             <a href="#" className="btn" onClick={handleAddToCart}>
               Add To Cart
             </a>
+            <a href="#" className="btn" onClick={handleAddToCart}>
+              Buy
+            </a>
             <h3>
               Product Details <i className="fa fa-indent" />
             </h3>
@@ -128,69 +76,13 @@ const ProductDetail = () => {
             </p>
           </div>
         </div>
-        {/*---- tittle ----*/}
-        {/* <div className="small-container">
-    <div className="row row-2">
-      <h2>Related Products</h2>
-      <p>View More</p>
-    </div>
-  </div> */}
-        {/*---- products ----*/}
-        {/* <div className="small-container">
-    <div className="row">
-      <div className="col-4">
-        <img src="img/products-1.jpg" />
-        <h4>Violet Cake</h4>
-        <div className="rating">
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star-o" />
-        </div>
-        <p>$50.00</p>
-      </div>
-      <div className="col-4">
-        <img src="img/products-12-1.jpg" />
-        <h4>Galaxy Lemon</h4>
-        <div className="rating">
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star-half-o" />
-          <i className="fa fa-star-o" />
-        </div>
-        <p>$30.00</p>
-      </div>
-      <div className="col-4">
-        <img src="img/products-1-5.jpg" />
-        <h4>Matcha Cake</h4>
-        <div className="rating">
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star-o" />
-        </div>
-        <p>$35.00</p>
-      </div>
-      <div className="col-4">
-        <img src="img/products-4.jpg" />
-        <h4>Mermaid Cake</h4>
-        <div className="rating">
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-          <i className="fa fa-star" />
-        </div>
-        <p>$65.00</p>
-      </div>
-    </div>
-  </div> */}
       </div>
       <NavBarMobile/>
-    </Wrapper>
+   </Wrapper>
+    
+   </>
+    
+
   );
 };
 

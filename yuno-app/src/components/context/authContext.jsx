@@ -47,7 +47,6 @@ const AuthContextProvider = ({ children }) => {
         try {
           const userCredential = await signInWithEmailAndPassword(auth, email, password);
           if (userCredential.user.accessToken) {
-            console.log(userCredential.user);
             const user = {
               email: userCredential.user.email,
               uid: userCredential.user.uid,

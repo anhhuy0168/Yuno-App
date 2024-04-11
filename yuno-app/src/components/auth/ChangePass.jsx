@@ -16,7 +16,7 @@ const ChangePass = () => {
     <>
     <div>ChangePass</div>
     <form onSubmit={(e)=> handleSubmit(e)}>
-        <input name="email"></input><br /><br />
+        <input name="email" placeholder='Enter email'></input><br /><br />
         <button>Reset</button>
     </form>
     </>

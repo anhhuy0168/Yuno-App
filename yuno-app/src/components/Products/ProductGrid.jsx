@@ -28,14 +28,14 @@ const ProductGrid = ({randomProductsList}) => {
                         <p className="showcase-badge">15%</p>
                       </div>
                       <div className="showcase-content">
-                        <a href="#" className="showcase-category">
+                        <span href="#" className="showcase-category">
                           {product.category}
-                        </a>
-                        <a href="#">
+                        </span>
+            
                           <h3 className="showcase-title">
                             {product.productName}
                           </h3>
-                        </a>
+                
                         {/* <div className="showcase-rating">
                           <ion-icon name="star" />
                           <ion-icon name="star" />
@@ -47,6 +47,7 @@ const ProductGrid = ({randomProductsList}) => {
                           <p className="price">${product.salePrice}</p>
                           <del>${product.currentPrice}</del>
                         </div>
+                        
                       </div>
                     </Link>
                       
