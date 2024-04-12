@@ -38,10 +38,10 @@ const Header = () => {
               <Link to={"/"}>
               <span href="#" className="header-logo">
                 <img
-                  src="../src/assets/images/logo/logo.svg"
+                  src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1712917412/1npjxlfvmb071_wy4r9g.webp"
                   alt="Anon's logo"
-                  width={120}
-                  height={36}
+                  width={50}
+                  height={50}
                 />
               </span>
               </Link>
