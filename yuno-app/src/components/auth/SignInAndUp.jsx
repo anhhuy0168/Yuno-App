@@ -5,6 +5,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import { Helmet } from "react-helmet";
+import Header from "../layout/Header";
 const Wrapper  = styled.section`
 .App {
     font-family: sans-serif;
@@ -247,7 +248,7 @@ const StyledBody = styled.body`
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
   height: 100vh;
-  margin: -20px 0 50px;
+  margin: -150px 0 50px;
   span {
     font-size: 12px;
   }
@@ -272,6 +273,7 @@ const SignInAndUp = () => {
     "container-submit " + (type === "signUp" ? "right-panel-active" : "");
   return (
     <>
+    <Header/>
       <Helmet>
         <link
           rel="stylesheet"
@@ -280,7 +282,7 @@ const SignInAndUp = () => {
       </Helmet>
       <StyledBody>
       <Wrapper>
-        <div className="App" style={{ textAlign: "center" }}>
+        <div className="App" >
         <div className={containerClass} id="container-submit">
           <Register />
           <Login />

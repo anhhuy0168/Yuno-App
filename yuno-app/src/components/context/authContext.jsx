@@ -46,11 +46,14 @@ const AuthContextProvider = ({ children }) => {
       const Login = async (email,password) => {
         try {
           const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          console.log(userCredential);
           if (userCredential.user.accessToken) {
             const user = {
               email: userCredential.user.email,
               uid: userCredential.user.uid,
-              accessToken: userCredential.user.accessToken
+              displayName: userCredential.user.displayName,
+              accessToken: userCredential.user.accessToken,
+              phoneNumber: userCredential.user.phoneNumber,
             };
             localStorage.setItem('user', JSON.stringify(user));
             dispatch({ type: USER_LOGIN_SUCCESS, payload: userCredential });
