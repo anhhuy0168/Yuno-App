@@ -47,8 +47,7 @@ const Profile = () => {
       setEditedInfo({ displayName: "", phoneNumber: "", address: "" });
 
     }
-    navigate(0);
-    console.log("hiii");
+    navigate("/");
   } catch (error) {
     console.log(error);
   }
