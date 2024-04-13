@@ -26,13 +26,13 @@ const CartContextProvider = ({ children }) => {
     cartLoading: true,
     listProductCart: [],
   });
-const user = getUserFromLocalStorage()
+  const user = getUserFromLocalStorage();
   const getCart = async () => {
     try {
       const response = await getDocs(cartCollectionRef);
       const filteredCarts = response.docs
-      .map((doc) => ({ ...doc.data(), id: doc.id }))
-      .filter((cart) => cart.userId === user.uid);
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .filter((cart) => cart.userId === user.uid);
       if (filteredCarts.length > 0) {
         dispatch({ type: CART_LOADED_SUCCESS, payload: filteredCarts });
       }
@@ -40,13 +40,29 @@ const user = getUserFromLocalStorage()
       dispatch({ type: CART_LOADED_FAIL });
     }
   };
-  const remoteProductCart = async () => {
+  const deleteProductCart = async (userId, productId) => {
     try {
-      
+      // Tìm và cập nhật giỏ hàng của người dùng
+      const response = await getDocs(cartCollectionRef);
+      const filteredCarts = response.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .filter((cart) => cart.userId === userId);
+        for (const cart of filteredCarts) {
+          // Lọc các sản phẩm trong giỏ hàng có productIds trùng khớp với productId
+          const updatedProducts = cart.product.filter((product) => product.productIds !== productId);
+            console.log(updatedProducts);
+          // Cập nhật giỏ hàng với danh sách sản phẩm đã lọc
+          const cartDoc = doc(db, "cart", cart.id);
+          await updateDoc(cartDoc, { product: updatedProducts });
+        }
+    
+
+      alert("Đã xóa sản phẩm khỏi giỏ hàng thành công!");
     } catch (error) {
-      
+      console.error("Lỗi khi xóa sản phẩm khỏi giỏ hàng:", error);
+      alert("Đã xảy ra lỗi khi xóa sản phẩm khỏi giỏ hàng!");
     }
-  }
+  };
   const editProductCart = async (userId, newProductIds, amount) => {
     try {
       const response = await getDocs(cartCollectionRef);
@@ -68,43 +84,50 @@ const user = getUserFromLocalStorage()
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   const addProductToCart = async (userId, newProductIds, amount) => {
     try {
-        const response = await getDocs(cartCollectionRef);
-        const filteredCarts = response.docs
-            .map((doc) => ({ ...doc.data(), id: doc.id }))
-            .filter((cart) => cart.userId === userId);
-        if (filteredCarts.length > 0) {
-            const cartDoc = doc(db, "cart", filteredCarts[0]?.id);
-            const existingProductIds = filteredCarts[0]?.product.map(product => product.productIds);
-            const newProductIdsArray = newProductIds.split(",");
-            const isDuplicate = newProductIdsArray.some(productId => existingProductIds.includes(productId));
-            if (isDuplicate) {
-                alert("Sản phẩm đã tồn tại trong giỏ hàng");
-            } else {
-                const newProduct = { productIds: newProductIds, amount: amount };
-                await updateDoc(cartDoc, {
-                    product: [...filteredCarts[0].product, newProduct],
-                });
-                alert("Thêm sản phẩm vào giỏ hàng thành công");
-            }
+      const response = await getDocs(cartCollectionRef);
+      const filteredCarts = response.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .filter((cart) => cart.userId === userId);
+      if (filteredCarts.length > 0) {
+        const cartDoc = doc(db, "cart", filteredCarts[0]?.id);
+        const existingProductIds = filteredCarts[0]?.product.map(
+          (product) => product.productIds
+        );
+        const newProductIdsArray = newProductIds.split(",");
+        const isDuplicate = newProductIdsArray.some((productId) =>
+          existingProductIds.includes(productId)
+        );
+        if (isDuplicate) {
+          alert("Sản phẩm đã tồn tại trong giỏ hàng");
         } else {
-            const newFields = { userId: userId, product: [{ productIds: newProductIds, amount: amount }] };
-            await addDoc(cartCollectionRef, newFields);
-            alert('Thêm sản phẩm vào giỏ hàng thành công!');
+          const newProduct = { productIds: newProductIds, amount: amount };
+          await updateDoc(cartDoc, {
+            product: [...filteredCarts[0].product, newProduct],
+          });
+          alert("Thêm sản phẩm vào giỏ hàng thành công");
         }
+      } else {
+        const newFields = {
+          userId: userId,
+          product: [{ productIds: newProductIds, amount: amount }],
+        };
+        await addDoc(cartCollectionRef, newFields);
+        alert("Thêm sản phẩm vào giỏ hàng thành công!");
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-};
-
+  };
 
   const cartContextData = {
     cartState,
     getCart,
     addProductToCart,
-    editProductCart
+    deleteProductCart,
+    editProductCart,
   };
 
   return (

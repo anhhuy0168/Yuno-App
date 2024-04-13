@@ -10,7 +10,9 @@ const ProductCart = () => {
   const user = getUserFromLocalStorage()
   const {
     cartState: { cart },
-    getCart,editProductCart
+    getCart,
+    deleteProductCart,
+    editProductCart
   } = useContext(CartContext);
   const {
     productState: { products },
@@ -29,7 +31,7 @@ const ProductCart = () => {
     if (cart[0]?.product) {
       const reversedQuantity = cart[0]?.product
         .map((product) => product.amount)
-        .reverse();
+
       setQuantity(reversedQuantity);
     }
   }, [cart]);
@@ -54,7 +56,9 @@ const ProductCart = () => {
     setQuantity(newQuantities);
     editProductCart(user.uid, productId, newQuantity);
   };
-
+const removeProductCart = ( productId) => {
+  deleteProductCart(user.uid,productId)
+}
   return (
     <>
       <Header />
@@ -80,7 +84,9 @@ const ProductCart = () => {
                         <p>{product.productName}</p>
                         <small>${product.salePrice}</small>
                         <br />
-                        <a href="">Remove</a>
+                        <a style={{cursor:"pointer"}} onClick={(e) =>
+                        removeProductCart(product.id)
+                      }>Remove</a>
                       </div>
                     </div>
                   </td>
