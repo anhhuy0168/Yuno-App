@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import StripeCheckout from 'react-stripe-checkout';
 import Stripe from 'stripe';
-const Payment = (total) => {
+const Payment = ({total}) => {
+
   const stripe = new Stripe('sk_test_51LbyNZFYvAR2okGPH5W9yBKhqohbFj9HLTdN8kootT9igdoSo8LNoRlxptCSQUQaqiGaiWIN13R0b4YNEKRzulqd00tCD5PtDY');
   const handleToken = async  (token) => {
     const  customer   = await  stripe.customers
@@ -47,22 +48,19 @@ const Payment = (total) => {
       return;
     }
   };
-  
-
   return (
-    <div className="App">
+    <div className="App" >
       <StripeCheckout
         stripeKey={
           "pk_test_51LbyNZFYvAR2okGPyqpV3A7965cBfOXkgkSBZTI2op80xFJdjHwHCOCsV2EGBdldK2jZMQS3mGHEhbCq9rSS8eLG00SEJdxO3x"
         }
-        name="Three Comma Co." 
-        description="Big Data Stuff"
-        email="info@vidhub.co"
+        name="Yuno App" 
+        email="info@yunoApp.com"
         token={handleToken}
  
         currency="USD"
-        amount={200}
-      ></StripeCheckout>
+        amount={total*10}
+      ><button style={{background:"red"}}>payment</button></StripeCheckout>
     </div>
   );
 };

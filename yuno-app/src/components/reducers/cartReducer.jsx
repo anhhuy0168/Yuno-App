@@ -5,12 +5,12 @@ export const cartReducer = (state, action) => {
       case CART_LOADED_SUCCESS:
         return {
           ...state,
-          listProductCart: payload,
+          cart: payload,
         };
       case CART_LOADED_FAIL:
         return {
           ...state,
-          listProductCart: [],
+          cart: [],
         };
       default:
         return state;

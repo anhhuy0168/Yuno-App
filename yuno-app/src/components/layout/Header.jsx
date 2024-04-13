@@ -31,7 +31,9 @@ const Header = () => {
     (cart) => cart.userId === user?.uid
   );
   const productIds = filteredCarts.map((cart) => cart.productIds).join(",");
-  const productCart = products.filter((product) => product.id === productIds);
+  const productCart = products.filter((product) =>
+    productIds.includes(product.id)
+  );
   return (
       <div className="header-main">
             <div className="container">

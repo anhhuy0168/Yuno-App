@@ -1,90 +1,158 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { CartContext } from "../context/cartContext";
-import { useContext, useEffect } from "react";
-import useUserFromLocalStorage from "../../hook/useUserFromLocalStorage";
 import { ProductContext } from "../context/productContext";
 import Payment from "../auth/Payment";
 import NavBarMobile from "../layout/NavBarMobile";
-import Wapper from"../../Style/ProductCartStyle"
-import Header from "../layout/Header"
+import Wapper from "../../Style/ProductCartStyle";
+import Header from "../layout/Header";
+import { getUserFromLocalStorage } from "../localStorage";
 const ProductCart = () => {
-  const { cartState, getCart } = useContext(CartContext);
-  const user = useUserFromLocalStorage();
+  const user = getUserFromLocalStorage()
+  const {
+    cartState: { cart },
+    getCart,editProductCart
+  } = useContext(CartContext);
   const {
     productState: { products },
     getProduct,
   } = useContext(ProductContext);
+  const [quantity, setQuantity] = useState([]);
+  const [productCart, setProductCart] = useState([]);
+  const productIds = cart[0]?.product.map((product) => product.productIds);
+
   useEffect(() => {
     getCart();
     getProduct();
   }, []);
-  const filteredCarts = cartState.listProductCart.filter(
-    (cart) => cart.userId === user?.uid
-  );
-  const productIds = filteredCarts.map((cart) => cart.productIds).join(",");
-  const productCart = products.filter((product) => product.id === productIds);
+
   useEffect(() => {
-    localStorage.setItem("cartTotalQuantity", filteredCarts.length);
-  }, [filteredCarts]);
+    if (cart[0]?.product) {
+      const reversedQuantity = cart[0]?.product
+        .map((product) => product.amount)
+        .reverse();
+      setQuantity(reversedQuantity);
+    }
+  }, [cart]);
+
+  useEffect(() => {
+    if (products.length && quantity.length && productIds.length) {
+      const updatedProductCart = products.filter((product) =>
+        productIds.includes(product.id)
+      );
+      setProductCart(updatedProductCart);
+    }
+  }, [products, quantity]);
+  
+  useEffect(() => {
+    localStorage.setItem("cartTotalQuantity", productCart.length);
+  }, [productCart]);
+
+  const handleQuantityChange = (e,productId, index) => {
+    const newQuantity = parseInt(e.target.value);
+    const newQuantities = [...quantity];
+    newQuantities[index] = newQuantity;
+    setQuantity(newQuantities);
+    editProductCart(user.uid, productId, newQuantity);
+  };
 
   return (
     <>
-    <Header/>
-    <Wapper>
-    <div className="small-container cart-page">
-    <table>
-      <tbody>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Subtotal</th>
-        </tr>
-        {productCart.map((product, index) => (
-        <tr key={index}>
-          <td>
-            <div className="cart-info">
-              <img src={product.productImage} width="200px" height="200px" />
-              <div>
-                <p>{product.productName}</p>
-                <small>${product.salePrice}.00</small>
-                <br />
-                <a href="">Remove</a>
-              </div>
-            </div>
-          </td>
-          <td>
-            <input type="number" defaultValue={1} />
-          </td>
-          <td>${product.salePrice}.00</td>
-        </tr>
-             ))}
-      </tbody>
-    </table>
-    <div className="total-price">
-      <table>
-        <tbody>
-          <tr>
-            <td>Subtotal</td>
-            <td>${productCart.reduce((total, product) => total + product.salePrice, 0)}.00</td>
-          </tr>
-          <tr>
-            <td>Tax</td>
-            <td>$30.00</td>
-          </tr>
-          <tr>
-            <td>Total</td>
-            <td>${productCart.reduce((total, product) => total + product.salePrice, 0) + 30}.00</td>
-          </tr>
-          <Payment/>
-        </tbody>
-      </table>
-    </div>
-  </div>
-    </Wapper>
-<NavBarMobile/>
-</>
-
-  )
+      <Header />
+      <Wapper>
+        <div className="small-container cart-page">
+          <table>
+            <tbody>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+              </tr>
+              {productCart.map((product, index) => (
+                <tr key={index}>
+                  <td>
+                    <div className="cart-info">
+                      <img
+                        src={product.productImage}
+                        width="200px"
+                        height="200px"
+                      />
+                      <div>
+                        <p>{product.productName}</p>
+                        <small>${product.salePrice}</small>
+                        <br />
+                        <a href="">Remove</a>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <input
+                      style={{ width: "15%", textAlign: "center" }}
+                      type="number"
+                      value={quantity[index] || ""}
+                      min="1"
+                      onChange={(e) =>
+                        handleQuantityChange(e, product.id, index)
+                      }
+                    />
+                  </td>
+                  <td>${product?.salePrice * (quantity[index] || 0)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="total-price">
+            <table>
+              <tbody>
+                <tr>
+                  <td>Subtotal</td>
+                  <td>
+                    $
+                    {productCart.reduce((total, product, index) => {
+                      return (
+                        total +
+                        parseFloat(product?.salePrice * (quantity[index] || 0))
+                      );
+                    }, 0)}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Tax</td>
+                  <td>$30</td>
+                </tr>
+                <tr>
+                  <td>Total</td>
+                  <td>
+                    $
+                    {productCart.reduce((total, product, index) => {
+                      return (
+                        total +
+                        parseFloat(
+                          product.salePrice * (quantity[index] || 0)
+                        )
+                      );
+                    }, 0) + 30}
+                  </td>
+                </tr>
+                <Payment
+                  total={
+                    productCart.reduce((total, product, index) => {
+                      return (
+                        total +
+                        parseFloat(
+                          product.salePrice * (quantity[index] || 0)
+                        )
+                      );
+                    }, 0) + 30
+                  }
+                />
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Wapper>
+      <NavBarMobile />
+    </>
+  );
 };
 
 export default ProductCart;

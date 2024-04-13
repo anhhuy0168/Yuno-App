@@ -71,7 +71,7 @@ const Profile = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("cartTotalQuantity");
-    navigate("/account");
+    navigate("/");
   };
 
   return (

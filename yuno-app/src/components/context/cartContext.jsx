@@ -1,7 +1,7 @@
 import { createContext, useReducer, useState } from "react";
-import '../../firebase-config'; 
+import "../../firebase-config";
 import { db } from "../../firebase-config";
-import {cartReducer} from'../reducers/cartReducer'
+import { cartReducer } from "../reducers/cartReducer";
 import {
   collection,
   getDocs,
@@ -11,54 +11,106 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { CART_LOADED_FAIL,CART_LOADED_SUCCESS,ADDPRODUCTTOCART } from "./constants";
+import {
+  CART_LOADED_FAIL,
+  CART_LOADED_SUCCESS,
+  ADDPRODUCTTOCART,
+} from "./constants";
+import { getUserFromLocalStorage } from "../localStorage";
 export const CartContext = createContext();
 const CartContextProvider = ({ children }) => {
-    const cartCollectionRef = collection(db, "cart");
-    // State
-    const [cartState, dispatch] = useReducer(cartReducer, {
-      cart: [],
-      cartLoading: true,
-      listProductCart:[]
-    });
-
-    const getCart = async () => {
-      try {
-        const response = await getDocs(cartCollectionRef);
-        const dataProducts =  response.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-        if (dataProducts.length> 0) {
-          dispatch({ type: CART_LOADED_SUCCESS, payload: dataProducts });
-        }
-      } catch (error) {
-        dispatch({ type: CART_LOADED_FAIL });
+  const cartCollectionRef = collection(db, "cart");
+  // State
+  const [cartState, dispatch] = useReducer(cartReducer, {
+    cart: [],
+    cartLoading: true,
+    listProductCart: [],
+  });
+const user = getUserFromLocalStorage()
+  const getCart = async () => {
+    try {
+      const response = await getDocs(cartCollectionRef);
+      const filteredCarts = response.docs
+      .map((doc) => ({ ...doc.data(), id: doc.id }))
+      .filter((cart) => cart.userId === user.uid);
+      if (filteredCarts.length > 0) {
+        dispatch({ type: CART_LOADED_SUCCESS, payload: filteredCarts });
       }
-    };
-    const addProductToCart = async (userId, productIds) => {
-        console.log(userId, productIds);
-        try {
-   
-              const dataProducts = await addDoc(cartCollectionRef, { userId, productIds });
-             console.log('Thêm sản phẩm vào giỏ hàng thành công!');
-          if (dataProducts.length> 0) {
-            dispatch({ type: ADDPRODUCTTOCART, payload: dataProducts });
-          }
-        } catch (error) {
-         console.log(error);
-        }
-      };
-   
-  
-    const cartContextData = {
-        cartState,
-        getCart,
-        addProductToCart
-    };
-  
-  
-    return (
-      <CartContext.Provider value={cartContextData}>
-        {children}
-      </CartContext.Provider>
-    );
+    } catch (error) {
+      dispatch({ type: CART_LOADED_FAIL });
+    }
   };
-  export default CartContextProvider;
+  const remoteProductCart = async () => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+  const editProductCart = async (userId, newProductIds, amount) => {
+    try {
+      const response = await getDocs(cartCollectionRef);
+      const filteredCarts = response.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .filter((cart) => cart.userId === userId);
+      if (filteredCarts.length > 0) {
+        const cartDoc = doc(db, "cart", filteredCarts[0]?.id);
+        const updatedProducts = filteredCarts[0].product.map((product) => {
+          if (newProductIds.includes(product.productIds)) {
+            return { ...product, amount: amount };
+          }
+          return product;
+        });
+        await updateDoc(cartDoc, { product: updatedProducts });
+      } else {
+        alert("Không tìm thấy giỏ hàng cho người dùng này");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const addProductToCart = async (userId, newProductIds, amount) => {
+    try {
+        const response = await getDocs(cartCollectionRef);
+        const filteredCarts = response.docs
+            .map((doc) => ({ ...doc.data(), id: doc.id }))
+            .filter((cart) => cart.userId === userId);
+        if (filteredCarts.length > 0) {
+            const cartDoc = doc(db, "cart", filteredCarts[0]?.id);
+            const existingProductIds = filteredCarts[0]?.product.map(product => product.productIds);
+            const newProductIdsArray = newProductIds.split(",");
+            const isDuplicate = newProductIdsArray.some(productId => existingProductIds.includes(productId));
+            if (isDuplicate) {
+                alert("Sản phẩm đã tồn tại trong giỏ hàng");
+            } else {
+                const newProduct = { productIds: newProductIds, amount: amount };
+                await updateDoc(cartDoc, {
+                    product: [...filteredCarts[0].product, newProduct],
+                });
+                alert("Thêm sản phẩm vào giỏ hàng thành công");
+            }
+        } else {
+            const newFields = { userId: userId, product: [{ productIds: newProductIds, amount: amount }] };
+            await addDoc(cartCollectionRef, newFields);
+            alert('Thêm sản phẩm vào giỏ hàng thành công!');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
+  const cartContextData = {
+    cartState,
+    getCart,
+    addProductToCart,
+    editProductCart
+  };
+
+  return (
+    <CartContext.Provider value={cartContextData}>
+      {children}
+    </CartContext.Provider>
+  );
+};
+export default CartContextProvider;
