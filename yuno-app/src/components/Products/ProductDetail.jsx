@@ -7,11 +7,17 @@ import { CartContext } from "../context/cartContext";
 import { getUserFromLocalStorage } from "../localStorage";
 import NavBarMobile from "../layout/NavBarMobile";
 import Header from "../layout/Header";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { FaCartPlus } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { getInformationUser } from "../localStorage";
 const ProductDetail = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [amount, setAmount] = useState(1);
+  const navigate = useNavigate();
+  const userData = getUserFromLocalStorage();
+  const information = getInformationUser()
   //PRODUCT CONTEXT
   const {
     productState: { products },
@@ -23,15 +29,30 @@ const ProductDetail = () => {
   //ADD PRODUCT TO CART
   const selectedProduct = products.find((product) => product.id === id);
   const handleChange = (event) => {
-    const newValue = (parseInt(event.target.value))
+    const newValue = parseInt(event.target.value);
     if (!isNaN(newValue) && newValue >= 0) {
-      setAmount(newValue);  
+      setAmount(newValue);
     }
   };
   const handleAddToCart = async () => {
     const productId = selectedProduct?.id;
     const userId = user.uid;
     await addProductToCart(userId, productId, amount);
+  };
+  const handleBuyProduct = async () => {
+    if(!information ||!information.address||!information.phoneNumber){
+      navigate("/profile")
+      alert("Please add information !!!")
+    }
+    else{
+      const userId = user.uid;
+      localStorage.setItem(
+        "order",
+        JSON.stringify({ userId, selectedProduct, amount })
+      );
+      navigate("/order");
+    }
+ 
   };
   //GET PRODUCT
   useEffect(() => {
@@ -59,16 +80,33 @@ const ProductDetail = () => {
               <p>{selectedProduct?.category}</p>
               <h1>{selectedProduct?.productName}</h1>
               <h4>Price: {selectedProduct?.salePrice}.00$</h4>
-              <input type="number" defaultValue={1} value={amount}  onChange={handleChange}/>
+              <input
+                type="number"
+                defaultValue={1}
+                value={amount}
+                onChange={handleChange}
+              />
               <a href="#" className="btn" onClick={handleAddToCart}>
-                Add To Cart
+                <FaCartPlus />
               </a>
-           
-              <a href="/order" className="btn" >
+              {userData.address==null&& userData.phoneNumber==null ? (
+                   <a
+                   className="btn"
+                   onClick={handleBuyProduct}
+                   style={{ cursor: "pointer" }}
+                 >
+                   Buy
+                 </a>
+              ) : (
+                <a
+                className="btn"
+                onClick={handleBuyProduct}
+                style={{ cursor: "pointer" }}
+              >
                 Buy
               </a>
+              )}
 
-              
               <h3>
                 Product Details <i className="fa fa-indent" />
               </h3>

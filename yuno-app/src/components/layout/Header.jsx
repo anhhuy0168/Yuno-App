@@ -9,8 +9,8 @@ import { getUserFromLocalStorage ,getCartTotalQuantity} from '../localStorage';
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/cartContext";
 import { useContext } from "react";
-import useUserFromLocalStorage from "../../hook/useUserFromLocalStorage";
 import { ProductContext } from "../context/productContext";
+import { AuthContext } from '../context/authContext';
 const Header = () => {
   const [user, setUser] = useState(null);
 
@@ -19,9 +19,13 @@ const Header = () => {
     productState: { products },
     getProduct,
   } = useContext(ProductContext);
+  const {
+    getUser
+  } = useContext(AuthContext);
   useEffect(() => {
     getCart();
     getProduct();
+    getUser()
   }, []);
   useEffect(() => {
     const userData = getUserFromLocalStorage();

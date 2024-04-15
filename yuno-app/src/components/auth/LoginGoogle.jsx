@@ -12,11 +12,11 @@ const LoginGoogle = ({ onClick }) => {
           localStorage.setItem('user', JSON.stringify({
             email: user.email,
             uid: user.uid,
-            accessToken: user.accessToken,
-            phoneNumber: user.phoneNumber,
-            displayName: user.displayName,
           }));
-          console.log(user);
+          localStorage.setItem("informationUser", JSON.stringify({
+            email: user.email,
+            uid: user.uid,
+          }));
           onClick(user)  
         })
         .catch((err) => {

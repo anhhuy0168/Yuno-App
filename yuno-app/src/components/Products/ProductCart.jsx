@@ -6,13 +6,17 @@ import NavBarMobile from "../layout/NavBarMobile";
 import Wapper from "../../Style/ProductCartStyle";
 import Header from "../layout/Header";
 import { getUserFromLocalStorage } from "../localStorage";
+import { getInformationUser } from "../localStorage";
+import { useNavigate } from "react-router-dom";
 const ProductCart = () => {
-  const user = getUserFromLocalStorage()
+  const user = getUserFromLocalStorage();
+  const information = getInformationUser();
+  const navigate = useNavigate()
   const {
     cartState: { cart },
     getCart,
     deleteProductCart,
-    editProductCart
+    editProductCart,
   } = useContext(CartContext);
   const {
     productState: { products },
@@ -26,11 +30,25 @@ const ProductCart = () => {
     getCart();
     getProduct();
   }, []);
-
+  const handleBuyProduct = async () => {
+    try {
+      if(productCart.length==0){
+        navigate("/");
+        alert("Please add product !!!");
+      }
+     else if (!information || !information.address || !information.phoneNumber) {
+        navigate("/profile");
+        alert("Please add information !!!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     if (cart[0]?.product) {
-      const reversedQuantity = cart[0]?.product
-        .map((product) => product.amount)
+      const reversedQuantity = cart[0]?.product.map(
+        (product) => product.amount
+      );
 
       setQuantity(reversedQuantity);
     }
@@ -44,21 +62,21 @@ const ProductCart = () => {
       setProductCart(updatedProductCart);
     }
   }, [products, quantity]);
-  
+
   useEffect(() => {
     localStorage.setItem("cartTotalQuantity", productCart.length);
   }, [productCart]);
 
-  const handleQuantityChange = (e,productId, index) => {
+  const handleQuantityChange = (e, productId, index) => {
     const newQuantity = parseInt(e.target.value);
     const newQuantities = [...quantity];
     newQuantities[index] = newQuantity;
     setQuantity(newQuantities);
     editProductCart(user.uid, productId, newQuantity);
   };
-const removeProductCart = ( productId) => {
-  deleteProductCart(user.uid,productId)
-}
+  const removeProductCart = (productId) => {
+    deleteProductCart(user.uid, productId);
+  };
   return (
     <>
       <Header />
@@ -84,9 +102,12 @@ const removeProductCart = ( productId) => {
                         <p>{product.productName}</p>
                         <small>${product.salePrice}</small>
                         <br />
-                        <a style={{cursor:"pointer"}} onClick={(e) =>
-                        removeProductCart(product.id)
-                      }>Remove</a>
+                        <a
+                          style={{ cursor: "pointer" }}
+                          onClick={(e) => removeProductCart(product.id)}
+                        >
+                          Remove
+                        </a>
                       </div>
                     </div>
                   </td>
@@ -132,25 +153,27 @@ const removeProductCart = ( productId) => {
                     {productCart.reduce((total, product, index) => {
                       return (
                         total +
-                        parseFloat(
-                          product.salePrice * (quantity[index] || 0)
-                        )
+                        parseFloat(product.salePrice * (quantity[index] || 0))
                       );
                     }, 0) + 30}
                   </td>
                 </tr>
-                <Payment
+                {!information ? (
+                  <div onClick={handleBuyProduct} style={{ background: "red",cursor:"pointer" }}>payment</div>
+                ) : (
+                  <div onClick={handleBuyProduct}><Payment
                   total={
                     productCart.reduce((total, product, index) => {
                       return (
                         total +
-                        parseFloat(
-                          product.salePrice * (quantity[index] || 0)
-                        )
+                        parseFloat(product.salePrice * (quantity[index] || 0))
                       );
                     }, 0) + 30
                   }
-                />
+                  productCart={productCart}
+                /></div>
+                 
+                )}
               </tbody>
             </table>
           </div>

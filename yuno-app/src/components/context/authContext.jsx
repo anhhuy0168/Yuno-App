@@ -1,18 +1,15 @@
 import { createContext, useReducer, useState } from "react";
 import '../../firebase-config'; 
 import {authReducer} from'../reducers/authReducer'
-// import {
-//   collection,
-//   getDocs,
-//   addDoc,
-//   updateDoc,
-//   deleteDoc,
-//   doc,
-// } from "firebase/firestore";
 import { USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,GET_USER_SUCCESS} from "./constants";
 import { createUserWithEmailAndPassword ,signInWithEmailAndPassword} from "firebase/auth";
 import { auth } from "../../firebase-config";
-
+import {
+  collection,
+  getDocs,
+} from "firebase/firestore";
+import { db } from "../../firebase-config";
+import { getUserFromLocalStorage } from "../localStorage";
 export const AuthContext = createContext();
 const AuthContextProvider = ({ children }) => {
     // State
@@ -21,15 +18,16 @@ const AuthContextProvider = ({ children }) => {
       userLoading: true,
       listUser: [],
     });
-    const getUser = () => {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        return  currentUser ;
-      } else {
-        console.log("có lỗi");
-        return null;
-      }
+    const dataUser = getUserFromLocalStorage()
+    const [users, setUsers] = useState([]);
+    const getUser = async () => {
+      const usersCollectionRef = collection(db, "users");
+      const data = await getDocs(usersCollectionRef);
+      const dataProducts =  data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      const productIds = dataProducts.filter((user) => user.uid === dataUser.uid);
+      localStorage.setItem("informationUser", JSON.stringify(productIds[0]));
     };
+    
     const Register = async (email,password) => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password)
@@ -46,18 +44,14 @@ const AuthContextProvider = ({ children }) => {
       const Login = async (email,password) => {
         try {
           const userCredential = await signInWithEmailAndPassword(auth, email, password);
-          console.log(userCredential);
           if (userCredential.user.accessToken) {
             const user = {
               email: userCredential.user.email,
               uid: userCredential.user.uid,
-              displayName: userCredential.user.displayName,
-              accessToken: userCredential.user.accessToken,
-              phoneNumber: userCredential.user.phoneNumber,
             };
             localStorage.setItem('user', JSON.stringify(user));
+
             dispatch({ type: USER_LOGIN_SUCCESS, payload: userCredential });
-            // const user = getUser();
             dispatch({ type: GET_USER_SUCCESS, payload: user });
           }
         } catch (error) {

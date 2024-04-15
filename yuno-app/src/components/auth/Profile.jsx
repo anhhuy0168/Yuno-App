@@ -36,18 +36,22 @@ const Profile = () => {
         address: editedInfo.address || informationUser.address,
       };
       await updateDoc(userDoc, newFields);
+      localStorage.setItem("informationUser", JSON.stringify(newFields));
     } else {
-      await addDoc(usersCollectionRef, {
+      const informationUser = {
         uid: user.uid,
         name: editedInfo.displayName,
         phoneNumber: editedInfo.phoneNumber,
         address: editedInfo.address,
-      });
+      };
+      
+      await addDoc(usersCollectionRef, informationUser);
       setIsEditing(false);
       setEditedInfo({ displayName: "", phoneNumber: "", address: "" });
-
+      localStorage.setItem("informationUser", JSON.stringify(informationUser));
+      
     }
-    navigate("/");
+    navigate("/profile");
   } catch (error) {
     console.log(error);
   }
@@ -69,8 +73,7 @@ const Profile = () => {
     }
   }, [informationUser]);
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("cartTotalQuantity");
+    localStorage.clear();
     navigate("/");
   };
 
