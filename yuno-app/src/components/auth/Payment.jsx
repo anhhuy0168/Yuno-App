@@ -1,13 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import StripeCheckout from 'react-stripe-checkout';
+import { getUserFromLocalStorage } from "../localStorage";
 import Stripe from 'stripe';
 const Payment = ({total}) => {
-
+const user= getUserFromLocalStorage()
   const stripe = new Stripe('sk_test_51LbyNZFYvAR2okGPH5W9yBKhqohbFj9HLTdN8kootT9igdoSo8LNoRlxptCSQUQaqiGaiWIN13R0b4YNEKRzulqd00tCD5PtDY');
   const handleToken = async  (token) => {
     const  customer   = await  stripe.customers
       .create({
-        email: "anhhuy123zxc123@gmail.com",
+        email:user.email,
       })
       .catch((e) => {
         console.log(e);
@@ -34,11 +35,11 @@ const Payment = ({total}) => {
   
     const charge =  stripe.charges.create(
       {
-        amount: 200,
+        amount: total*100,
         currency: "USD",
         customer: customer.id,
         source: attachedCard.id,
-        receipt_email: "anhhuy123zxc123@gmail.com",
+        receipt_email: user.email,
         description: "Yuno-App",
       },
       { idempotencyKey: invoiceId }

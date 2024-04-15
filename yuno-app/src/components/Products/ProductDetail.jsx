@@ -7,6 +7,7 @@ import { CartContext } from "../context/cartContext";
 import { getUserFromLocalStorage } from "../localStorage";
 import NavBarMobile from "../layout/NavBarMobile";
 import Header from "../layout/Header";
+import { Link } from "react-router-dom";
 const ProductDetail = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
@@ -62,9 +63,12 @@ const ProductDetail = () => {
               <a href="#" className="btn" onClick={handleAddToCart}>
                 Add To Cart
               </a>
-              <a href="#" className="btn" onClick={handleAddToCart}>
+           
+              <a href="/order" className="btn" >
                 Buy
               </a>
+
+              
               <h3>
                 Product Details <i className="fa fa-indent" />
               </h3>

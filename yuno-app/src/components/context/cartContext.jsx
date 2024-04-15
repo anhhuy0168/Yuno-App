@@ -47,19 +47,17 @@ const CartContextProvider = ({ children }) => {
       const filteredCarts = response.docs
         .map((doc) => ({ ...doc.data(), id: doc.id }))
         .filter((cart) => cart.userId === userId);
-        for (const cart of filteredCarts) {
-          // Lọc các sản phẩm trong giỏ hàng có productIds trùng khớp với productId
-          const updatedProducts = cart.product.filter((product) => product.productIds !== productId);
-            console.log(updatedProducts);
-          // Cập nhật giỏ hàng với danh sách sản phẩm đã lọc
-          const cartDoc = doc(db, "cart", cart.id);
-          await updateDoc(cartDoc, { product: updatedProducts });
-        }
-    
-
+      for (const cart of filteredCarts) {
+        // Lọc các sản phẩm trong giỏ hàng có productIds trùng khớp với productId
+        const updatedProducts = cart.product.filter(
+          (product) => product.productIds !== productId
+        );
+        // Cập nhật giỏ hàng với danh sách sản phẩm đã lọc
+        const cartDoc = doc(db, "cart", cart.id);
+        await updateDoc(cartDoc, { product: updatedProducts });
+      }
       alert("Đã xóa sản phẩm khỏi giỏ hàng thành công!");
     } catch (error) {
-      console.error("Lỗi khi xóa sản phẩm khỏi giỏ hàng:", error);
       alert("Đã xảy ra lỗi khi xóa sản phẩm khỏi giỏ hàng!");
     }
   };

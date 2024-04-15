@@ -10,6 +10,7 @@ import Profile from "./components/auth/Profile";
 import ChangePass from "./components/auth/ChangePass";
 import Footer from "./components/layout/Footer";
 import SignInAndUp from "./components/auth/SignInAndUp";
+import OrderAuth from "./components/auth/OrderAuth";
 function App() {
   return (
     <>
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/changePass" element={<ChangePass />} />
                 <Route path="/account" element={<SignInAndUp />} />
+                <Route path="/order" element={<OrderAuth />} />
               </Routes>
               <Footer/>
             </BrowserRouter>
