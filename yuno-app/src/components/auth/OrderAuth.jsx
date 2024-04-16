@@ -5,22 +5,21 @@ import Payment from "./Payment";
 import { getOrder } from "../localStorage";
 
 const OrderAuth = () => {
-  const initialOrder = getOrder();
-  const [order, setOrder] = useState(initialOrder);
-  const [amount, setAmount] = useState(initialOrder ? initialOrder.amount : 1);
+  const [order, setOrder] = useState(getOrder());
+  const [amount, setAmount] = useState(order ? order.amount : 1);
 
   useEffect(() => {
     // Tính toán lại Subtotal và Total khi amount thay đổi
-    if (initialOrder) {
-      const newOrder = { ...initialOrder, amount: amount };
+    if (order) {
+      const newOrder = { ...order, amount: amount };
       setOrder(newOrder);
     }
   }, [amount]);
 
   const handleAmountChange = (e) => {
-    setAmount(parseInt(e.target.value));
+    const newAmount = parseInt(e.target.value);
+    setAmount(newAmount);
   };
-
   return (
     <>
       <Header />
@@ -37,27 +36,26 @@ const OrderAuth = () => {
                 <td>
                   <div className="cart-info">
                     <img
-                      src={order.selectedProduct.productImage}
+                      src={order.productImage}
                       width="200px"
                       height="200px"
                     />
                     <div>
-                      <p>{order.selectedProduct.productName}</p>
-                      <small>{order.selectedProduct.salePrice}.00$</small>
+                      <p>{order.productName}</p>
+                      <small>{order.salePrice}.00$</small>
                       <br />
                     </div>
                   </div>
                 </td>
                 <td>
-                  {/* Sử dụng input có khả năng chỉnh sửa */}
                   <input
-                  style={{width: '20%',}}
+                    style={{width: '20%',}}
                     type="number"
                     value={amount}
                     onChange={handleAmountChange}
                   />
                 </td>
-                <td>${order.selectedProduct.salePrice * amount}.00</td>
+                <td>${order.salePrice * amount}.00</td>
               </tr>
             </tbody>
           </table>
@@ -66,9 +64,7 @@ const OrderAuth = () => {
               <tbody>
                 <tr>
                   <td>Subtotal</td>
-                  <td>
-                    ${order.selectedProduct.salePrice * amount}.00
-                  </td>
+                  <td>${order.salePrice * amount}.00</td>
                 </tr>
                 <tr>
                   <td>Tax</td>
@@ -76,12 +72,10 @@ const OrderAuth = () => {
                 </tr>
                 <tr>
                   <td>Total</td>
-                  <td>
-                    ${order.selectedProduct.salePrice * amount + 30}.00
-                  </td>
+                  <td>${order.salePrice * amount + 30}.00</td>
                 </tr>
               </tbody>
-              <Payment total={order.selectedProduct.salePrice * amount + 30} productCart={order.selectedProduct}/>
+              <Payment total={order.salePrice * amount + 30} productCart={order}/>
             </table>
           </div>
         </div>

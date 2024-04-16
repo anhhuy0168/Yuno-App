@@ -11,6 +11,7 @@ import ChangePass from "./components/auth/ChangePass";
 import Footer from "./components/layout/Footer";
 import SignInAndUp from "./components/auth/SignInAndUp";
 import OrderAuth from "./components/auth/OrderAuth";
+import PaymentHistory from "./components/auth/PaymentHistory";
 function App() {
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/changePass" element={<ChangePass />} />
                 <Route path="/account" element={<SignInAndUp />} />
                 <Route path="/order" element={<OrderAuth />} />
+                <Route path="/paymentHistory" element={<PaymentHistory />} />
               </Routes>
               <Footer/>
             </BrowserRouter>

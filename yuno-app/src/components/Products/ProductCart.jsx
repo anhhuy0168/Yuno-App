@@ -18,6 +18,7 @@ const ProductCart = () => {
     deleteProductCart,
     editProductCart,
   } = useContext(CartContext);
+
   const {
     productState: { products },
     getProduct,
@@ -26,10 +27,7 @@ const ProductCart = () => {
   const [productCart, setProductCart] = useState([]);
   const productIds = cart[0]?.product.map((product) => product.productIds);
 
-  useEffect(() => {
-    getCart();
-    getProduct();
-  }, []);
+
   const handleBuyProduct = async () => {
     try {
       if(productCart.length==0){
@@ -58,7 +56,10 @@ const ProductCart = () => {
     if (products.length && quantity.length && productIds.length) {
       const updatedProductCart = products.filter((product) =>
         productIds.includes(product.id)
-      );
+      ).map((product, index) => ({
+        ...product,
+        amount: quantity[index]
+      }));
       setProductCart(updatedProductCart);
     }
   }, [products, quantity]);
@@ -76,7 +77,9 @@ const ProductCart = () => {
   };
   const removeProductCart = (productId) => {
     deleteProductCart(user.uid, productId);
+    getCart()
   };
+  console.log(productCart);
   return (
     <>
       <Header />

@@ -1,17 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
-import StripeCheckout from 'react-stripe-checkout';
-import { getUserFromLocalStorage,getInformationUser } from "../localStorage";
-import Stripe from 'stripe';
+import StripeCheckout from "react-stripe-checkout";
+import { getUserFromLocalStorage, getInformationUser } from "../localStorage";
+import Stripe from "stripe";
 import { db } from "../../firebase-config";
-import {
-  collection,
-  addDoc,
-} from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-const Payment = ({ total,productCart} ) => {
-  const navigate = useNavigate()
+const Payment = ({ total, productCart }) => {
+  // console.log(productCart);
+  const navigate = useNavigate();
   const user = getInformationUser();
-  const stripe = new Stripe('sk_test_51LbyNZFYvAR2okGPH5W9yBKhqohbFj9HLTdN8kootT9igdoSo8LNoRlxptCSQUQaqiGaiWIN13R0b4YNEKRzulqd00tCD5PtDY');
+  const stripe = new Stripe(
+    "sk_test_51LbyNZFYvAR2okGPH5W9yBKhqohbFj9HLTdN8kootT9igdoSo8LNoRlxptCSQUQaqiGaiWIN13R0b4YNEKRzulqd00tCD5PtDY"
+  );
   const ordersCollectionRef = collection(db, "orders");
   const handleToken = async (token) => {
     const customer = await createStripeCustomer(token);
@@ -28,7 +28,12 @@ const Payment = ({ total,productCart} ) => {
       return;
     }
 
-    const charge = await createCharge(total, customer.id, attachedCard.id, user.email);
+    const charge = await createCharge(
+      total,
+      customer.id,
+      attachedCard.id,
+      user.email
+    );
 
     if (!charge) {
       console.log("Error creating charge");
@@ -59,7 +64,6 @@ const Payment = ({ total,productCart} ) => {
       return null;
     }
   };
-
   const createCharge = async (total, customerId, cardId, userEmail) => {
     try {
       const charge = await stripe.charges.create({
@@ -71,15 +75,34 @@ const Payment = ({ total,productCart} ) => {
         description: "Yuno-App",
       });
       if (Array.isArray(productCart)) {
-        console.log(productCart[0]);
-        await addDoc(ordersCollectionRef, { user: user.name, product: [{productCart}],status:'pending',total:total*100 });
-        alert("DONEEEEEEEEEEEEEEE")
-        navigate("/profile")
-      }
-      else{
-        await addDoc(ordersCollectionRef, { user: user.name, product: [productCart],status:'pending',total:total*100 });
-        alert("DONEEEEEEEEEEEEEEE")
-        navigate("/profile")
+        const productArray = Object.values(productCart).map(product => ({
+          ...product,
+          amount: product.amount
+        }));
+        await addDoc(ordersCollectionRef, {
+          user: user.name,
+          product: productArray,
+          status: "pending",
+          total: total * 100,
+          uid: user.uid,
+          address: user.address,
+          phoneNumber: user.phoneNumber,
+        });
+        alert("DONEEEEEEEEEEEEEEE");
+        navigate("/profile");
+      } else {
+        await addDoc(ordersCollectionRef, {
+          user: user.name,
+          product: [productCart],
+          status: "pending",
+          total: total * 100,
+          uid: user.uid,
+          address: user.address,
+          phoneNumber: user.phoneNumber,
+          amount:productCart.amount
+        });
+        alert("DONEEEEEEEEEEEEEEE");
+        navigate("/profile");
       }
       return charge;
     } catch (error) {
@@ -87,8 +110,6 @@ const Payment = ({ total,productCart} ) => {
       return null;
     }
   };
- 
-
 
   return (
     <div className="App">
@@ -96,13 +117,13 @@ const Payment = ({ total,productCart} ) => {
         stripeKey={
           "pk_test_51LbyNZFYvAR2okGPyqpV3A7965cBfOXkgkSBZTI2op80xFJdjHwHCOCsV2EGBdldK2jZMQS3mGHEhbCq9rSS8eLG00SEJdxO3x"
         }
-        name="Yuno App" 
+        name="Yuno App"
         email="info@yunoApp.com"
         token={handleToken}
         currency="USD"
         amount={total * 100}
       >
-        <button style={{background:"red",minWidth:"100%"}}>payment</button>
+        <button style={{ background: "red", minWidth: "100%" }}>payment</button>
       </StripeCheckout>
     </div>
   );

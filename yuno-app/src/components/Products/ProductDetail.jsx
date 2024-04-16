@@ -46,13 +46,9 @@ const ProductDetail = () => {
     }
     else{
       const userId = user.uid;
-      localStorage.setItem(
-        "order",
-        JSON.stringify({ userId, selectedProduct, amount })
-      );
+      localStorage.setItem("order", JSON.stringify({ userId,  ...selectedProduct , amount }));
       navigate("/order");
     }
- 
   };
   //GET PRODUCT
   useEffect(() => {
@@ -62,7 +58,7 @@ const ProductDetail = () => {
     const userFromLocalStorage = getUserFromLocalStorage();
     setUser(userFromLocalStorage);
   }, []);
-
+console.log(selectedProduct);
   return (
     <>
       <Header />
