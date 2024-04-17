@@ -55,6 +55,7 @@ const CartContextProvider = ({ children }) => {
         // Cập nhật giỏ hàng với danh sách sản phẩm đã lọc
         const cartDoc = doc(db, "cart", cart.id);
         await updateDoc(cartDoc, { product: updatedProducts });
+        getCart()
       }
       alert("Đã xóa sản phẩm khỏi giỏ hàng thành công!");
     } catch (error) {

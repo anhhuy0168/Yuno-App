@@ -19,7 +19,6 @@ const Header = () => {
   useEffect(() => {
     getCart();
     getProduct();
-    getUser();
   }, []);
   useEffect(() => {
     const userData = getUserFromLocalStorage();

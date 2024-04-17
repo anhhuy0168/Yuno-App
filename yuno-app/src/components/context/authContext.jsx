@@ -50,7 +50,7 @@ const AuthContextProvider = ({ children }) => {
               uid: userCredential.user.uid,
             };
             localStorage.setItem('user', JSON.stringify(user));
-
+            getUser()
             dispatch({ type: USER_LOGIN_SUCCESS, payload: userCredential });
             dispatch({ type: GET_USER_SUCCESS, payload: user });
           }
