@@ -35,12 +35,23 @@ const ProductDetail = () => {
     }
   };
   const handleAddToCart = async () => {
-    const productId = selectedProduct?.id;
-    const userId = user.uid;
-    await addProductToCart(userId, productId, amount);
+    if(user==null){
+      navigate("/account")
+      alert("Please Login !!!")
+    }
+    else{
+      const productId = selectedProduct?.id;
+      const userId = user.uid;
+      await addProductToCart(userId, productId, amount);
+    }
+
   };
   const handleBuyProduct = async () => {
-    if(!information ||!information.address||!information.phoneNumber){
+    if(user==null){
+      navigate("/account")
+      alert("Please Login !!!")
+    }
+   else if(!information ||!information.address||!information.phoneNumber){
       navigate("/profile")
       alert("Please add information !!!")
     }
@@ -58,7 +69,6 @@ const ProductDetail = () => {
     const userFromLocalStorage = getUserFromLocalStorage();
     setUser(userFromLocalStorage);
   }, []);
-console.log(selectedProduct);
   return (
     <>
       <Header />
@@ -85,7 +95,7 @@ console.log(selectedProduct);
               <a href="#" className="btn" onClick={handleAddToCart}>
                 <FaCartPlus />
               </a>
-              {userData.address==null&& userData.phoneNumber==null ? (
+              {userData?.address==null&& userData?.phoneNumber==null ? (
                    <a
                    className="btn"
                    onClick={handleBuyProduct}

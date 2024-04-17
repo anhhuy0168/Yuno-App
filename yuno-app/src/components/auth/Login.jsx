@@ -3,6 +3,7 @@ import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 import NavBarMobile from "../layout/NavBarMobile";
 import LoginGoogle from "./LoginGoogle";
+import { Link } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -63,7 +64,10 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <Link to={"/changePass"}>
           <a href="#">Forgot your password?</a>
+          </Link>
+
           <button className="button-container">Sign In</button>
         </form>
       </div>

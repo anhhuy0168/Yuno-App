@@ -24,7 +24,7 @@ const AuthContextProvider = ({ children }) => {
       const usersCollectionRef = collection(db, "users");
       const data = await getDocs(usersCollectionRef);
       const dataProducts =  data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-      const productIds = dataProducts.filter((user) => user.uid === dataUser.uid);
+      const productIds = dataProducts.filter((user) => user.uid === dataUser?.uid);
       localStorage.setItem("informationUser", JSON.stringify(productIds[0]));
     };
     
