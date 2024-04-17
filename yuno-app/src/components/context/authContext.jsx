@@ -43,16 +43,20 @@ const AuthContextProvider = ({ children }) => {
       };
       const Login = async (email,password) => {
         try {
+          const usersCollectionRef = collection(db, "users");
           const userCredential = await signInWithEmailAndPassword(auth, email, password);
           if (userCredential.user.accessToken) {
             const user = {
               email: userCredential.user.email,
               uid: userCredential.user.uid,
             };
+            const data = await getDocs(usersCollectionRef);
+            const dataProducts =  data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+            const productIds = dataProducts.filter((user) => user.uid === dataUser?.uid);
+            localStorage.setItem("informationUser", JSON.stringify(productIds[0]));
             localStorage.setItem('user', JSON.stringify(user));
             dispatch({ type: USER_LOGIN_SUCCESS, payload: userCredential });
             dispatch({ type: GET_USER_SUCCESS, payload: user });
-            getUser()
           }
         } catch (error) {
           dispatch({ type: USER_LOGIN_FAIL });

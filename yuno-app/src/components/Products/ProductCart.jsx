@@ -102,7 +102,7 @@ const ProductCart = () => {
                     </td>
                     <td>
                       <input
-                        style={{ textAlign: "center", fontSize: "12px" }}
+                        style={{fontSize: "13px",width:"50px" }}
                         type="number"
                         value={quantity[index] || ""}
                         min="1"

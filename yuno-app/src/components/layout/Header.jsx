@@ -9,8 +9,11 @@ import { ProductContext } from "../context/productContext";
 import { AuthContext } from "../context/authContext";
 const Header = () => {
   const [user, setUser] = useState(null);
-
-  const { cartState, getCart } = useContext(CartContext);
+  const [productCart, setProductCart] = useState([]);
+  const {
+    cartState: { cart },
+    getCart,
+  } = useContext(CartContext);
   const {
     productState: { products },
     getProduct,
@@ -24,13 +27,15 @@ const Header = () => {
     const userData = getUserFromLocalStorage();
     setUser(userData);
   }, []);
-  const filteredCarts = cartState.listProductCart.filter(
-    (cart) => cart.userId === user?.uid
-  );
-  const productIds = filteredCarts.map((cart) => cart.productIds).join(",");
-  const productCart = products.filter((product) =>
-    productIds.includes(product.id)
-  );
+
+  useEffect(() => {
+    if (cart[0]?.product && products.length) {
+      const updatedProductCart = products.filter((product) =>
+        cart[0].product.some((item) => item.productIds === product.id)
+      );
+      setProductCart(updatedProductCart);
+    }
+  }, [cart, products]);
   return (
     <div className="header-main">
       <div className="container">
@@ -57,25 +62,24 @@ const Header = () => {
         </div>
         <div className="header-user-actions">
           <button className="action-btn">
-              {user ? (  
-                  <>
-                  <Link to={"/profile"}>         
-                   <FaRegUserCircle
-                   name="person-outline"
-                   style={{ color: "red" }}
-                      />
-             </Link>  
-                  </>
-              ) : (
-                // <div class="dropdown">
-                //     <div class="dropdown-content">
-                      <Link to={"/account"} style={{color:"red"}}>
-
-                      <FaRegUserCircle/>
-                      </Link>
-                  //   </div>
-                  // </div>               
-              )}
+            {user ? (
+              <>
+                <Link to={"/profile"}>
+                  <FaRegUserCircle
+                    name="person-outline"
+                    style={{ color: "red" }}
+                  />
+                </Link>
+              </>
+            ) : (
+              // <div class="dropdown">
+              //     <div class="dropdown-content">
+              <Link to={"/account"} style={{ color: "red" }}>
+                <FaRegUserCircle />
+              </Link>
+              //   </div>
+              // </div>
+            )}
           </button>
           <button className="action-btn">
             <Link to={user ? "/productCart" : "/account"}>
