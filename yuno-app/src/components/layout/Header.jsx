@@ -57,23 +57,24 @@ const Header = () => {
         </div>
         <div className="header-user-actions">
           <button className="action-btn">
-            <Link to={"/account"}>
-              {user ? (             
+              {user ? (  
+                  <>
+                  <Link to={"/profile"}>         
                    <FaRegUserCircle
                    name="person-outline"
                    style={{ color: "red" }}
-                 />
+                      />
+             </Link>  
+                  </>
               ) : (
                 <div class="dropdown">
-                    <span><FaRegUserCircle/></span>
                     <div class="dropdown-content">
                       <Link to={"/account"}>
-                        Account
+                      <FaRegUserCircle/>
                       </Link>
                     </div>
                   </div>               
               )}
-            </Link>
           </button>
           <button className="action-btn">
             <Link to={user ? "/productCart" : "/account"}>
