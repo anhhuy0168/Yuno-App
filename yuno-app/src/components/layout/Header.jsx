@@ -67,13 +67,14 @@ const Header = () => {
              </Link>  
                   </>
               ) : (
-                <div class="dropdown">
-                    <div class="dropdown-content">
-                      <Link to={"/account"}>
+                // <div class="dropdown">
+                //     <div class="dropdown-content">
+                      <Link to={"/account"} style={{color:"red"}}>
+
                       <FaRegUserCircle/>
                       </Link>
-                    </div>
-                  </div>               
+                  //   </div>
+                  // </div>               
               )}
           </button>
           <button className="action-btn">
