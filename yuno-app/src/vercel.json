@@ -1,17 +1,1 @@
-
-{
-  "redirects": [
-    { "source": "/login", "destination": "/index.html" },
-    { "source": "/productDetail/:id", "destination": "/index.html" },
-    { "source": "/productCart", "destination": "/index.html" },
-    { "source": "/profile", "destination": "/index.html" },
-    { "source": "/changePass", "destination": "/index.html" },
-    { "source": "/account", "destination": "/index.html" },
-    { "source": "/order", "destination": "/index.html" },
-    { "source": "/paymentHistory", "destination": "/index.html" },
-    { "source": "/search", "destination": "/index.html" }
-  ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/"  }
-  ]
-}
+{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
