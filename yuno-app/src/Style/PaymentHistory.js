@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 const Wrapper = styled.section`
   table {
     font-family: Arial, sans-serif;
@@ -112,3 +111,4 @@ const Wrapper = styled.section`
     }
   }
 `;
+export default Wrapper
