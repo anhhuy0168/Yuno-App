@@ -80,11 +80,12 @@ const ProductDetail = () => {
                 src={selectedProduct?.productImage}
                 width="100%"
                 id="ProductImg"
+                style={{borderRadius: "30px"}}
               />
             </div>
             <div className="col-2">
-              <p>{selectedProduct?.category}</p>
               <h1>{selectedProduct?.productName}</h1>
+              
               <h4>Price: {selectedProduct?.salePrice}.00$</h4>
               <input
                 type="number"
@@ -92,7 +93,7 @@ const ProductDetail = () => {
                 value={amount}
                 onChange={handleChange}
               />
-              <a href="#" className="btn" onClick={handleAddToCart}>
+              <a href="#" className="btn" onClick={handleAddToCart} style={{marginRight:"10px"}}>
                 <FaCartPlus />
               </a>
               {userData?.address==null&& userData?.phoneNumber==null ? (
@@ -107,17 +108,17 @@ const ProductDetail = () => {
                 <a
                 className="btn"
                 onClick={handleBuyProduct}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer",marginLeft:"10px" }}
               >
                 Buy
               </a>
               )}
 
               <h3>
-                Product Details <i className="fa fa-indent" />
+                Product Details: <i className="fa fa-indent" />
               </h3>
-              <p>
-                Cake can also be a bridge to help you solve misunderstandings,
+              <p style={{paddingRight:"50px"}}>
+                Cake can also be a bride to help you solve misunderstandings,
                 you can "take advantage of" inherent sweetness to soothe your
                 temper, shorten the distance for you to be close to each other,
                 understand each other and cherish. respect each other more.

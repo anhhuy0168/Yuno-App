@@ -12,6 +12,7 @@ import Footer from "./components/layout/Footer";
 import SignInAndUp from "./components/auth/SignInAndUp";
 import OrderAuth from "./components/auth/OrderAuth";
 import PaymentHistory from "./components/auth/PaymentHistory";
+import SearchProduct from "./components/layout/SearchProduct";
 function App() {
   return (
     <>
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/account" element={<SignInAndUp />} />
                 <Route path="/order" element={<OrderAuth />} />
                 <Route path="/paymentHistory" element={<PaymentHistory />} />
+                <Route path="/search" element={<SearchProduct />} />
               </Routes>
               <Footer/>
             </BrowserRouter>

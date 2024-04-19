@@ -29,3 +29,12 @@ export const getUserFromLocalStorage = () => {
       return null; // Trả về null nếu không tìm thấy dữ liệu trong local storage
     }
   };
+  export const getNameProduct = () => {
+    const orderString = localStorage.getItem("nameProduct");
+    // Kiểm tra xem orderString có tồn tại không
+    if (orderString) {
+      return JSON.parse(orderString); // Parse JSON nếu cần
+    } else {
+      return null; // hoặc giá trị mặc định khác tùy vào trường hợp của bạn
+    }
+  };

@@ -32,9 +32,9 @@ const Navbar = () => {
             </div>
           </div>
           <header>
-            <nav className="desktop-navigation-menu">
+            <nav className="desktop-navigation-menu" style={{marginBottom:"2%"}}>
               <div className="container">
-                <ul className="desktop-menu-category-list">
+                {/* <ul className="desktop-menu-category-list">
                   <li className="menu-category">
                     <span href="#" className="menu-title">
                       Home
@@ -253,7 +253,7 @@ const Navbar = () => {
                       Hot Offers
                     </a>
                   </li>
-                </ul>
+                </ul> */}
               </div>
             </nav>
             <NavBarMobie />
