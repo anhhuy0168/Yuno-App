@@ -5,8 +5,15 @@ import Header from "../layout/Header";
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { getUserFromLocalStorage } from "../localStorage";
 import Wapper from "../../Style/Profile";
-import { getDocs, addDoc, collection, doc ,updateDoc} from "firebase/firestore";
+import {
+  getDocs,
+  addDoc,
+  collection,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase-config";
+import { Button, Checkbox, Form, Input } from "antd";
 const Profile = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -25,36 +32,38 @@ const Profile = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-  try {
-    if (informationUser) {
-      //edit information
-      const userDoc = doc(db, "users", informationUser.id);
-      const newFields = {
-        uid: user.uid,
-        name: editedInfo.displayName || informationUser.name,
-        phoneNumber: editedInfo.phoneNumber || informationUser.phoneNumber,
-        address: editedInfo.address || informationUser.address,
-      };
-      await updateDoc(userDoc, newFields);
-      localStorage.setItem("informationUser", JSON.stringify(newFields));
-    } else {
-      const informationUser = {
-        uid: user.uid,
-        name: editedInfo.displayName,
-        phoneNumber: editedInfo.phoneNumber,
-        address: editedInfo.address,
-      };
-      
-      await addDoc(usersCollectionRef, informationUser);
-      setIsEditing(false);
-      setEditedInfo({ displayName: "", phoneNumber: "", address: "" });
-      localStorage.setItem("informationUser", JSON.stringify(informationUser));
-      
+    try {
+      if (informationUser) {
+        //edit information
+        const userDoc = doc(db, "users", informationUser.id);
+        const newFields = {
+          uid: user.uid,
+          name: editedInfo.displayName || informationUser.name,
+          phoneNumber: editedInfo.phoneNumber || informationUser.phoneNumber,
+          address: editedInfo.address || informationUser.address,
+        };
+        await updateDoc(userDoc, newFields);
+        localStorage.setItem("informationUser", JSON.stringify(newFields));
+      } else {
+        const informationUser = {
+          uid: user.uid,
+          name: editedInfo.displayName,
+          phoneNumber: editedInfo.phoneNumber,
+          address: editedInfo.address,
+        };
+
+        await addDoc(usersCollectionRef, informationUser);
+        setIsEditing(false);
+        setEditedInfo({ displayName: "", phoneNumber: "", address: "" });
+        localStorage.setItem(
+          "informationUser",
+          JSON.stringify(informationUser)
+        );
+      }
+      navigate("/profile");
+    } catch (error) {
+      console.log(error);
     }
-    navigate("/profile");
-  } catch (error) {
-    console.log(error);
-  }
   };
   useEffect(() => {
     const getUsers = async () => {
@@ -70,6 +79,16 @@ const Profile = () => {
   useEffect(() => {
     if (informationUser) {
       setIsEditing(false);
+    }
+  }, [informationUser]);
+  useEffect(() => {
+    if (informationUser) {
+      // Nếu có thông tin người dùng, cập nhật giá trị của `editedInfo` thành thông tin người dùng
+      setEditedInfo({
+        displayName: informationUser.name || "",
+        phoneNumber: informationUser.phoneNumber || "",
+        address: informationUser.address || "",
+      });
     }
   }, [informationUser]);
   const handleLogout = () => {
@@ -90,6 +109,7 @@ const Profile = () => {
                 placeholder="Tên hiển thị"
                 value={editedInfo.displayName}
                 onChange={handleInputChange}
+                required
               />
               <input
                 type="text"
@@ -97,6 +117,7 @@ const Profile = () => {
                 placeholder="Số điện thoại"
                 value={editedInfo.phoneNumber}
                 onChange={handleInputChange}
+                required
               />
               <input
                 type="text"
@@ -104,11 +125,10 @@ const Profile = () => {
                 placeholder="Địa chỉ"
                 value={editedInfo.address}
                 onChange={handleInputChange}
+                required
               />
 
               <button type="submit">Lưu</button>
-   
-       
             </form>
           ) : (
             <div className="profile-user__info">

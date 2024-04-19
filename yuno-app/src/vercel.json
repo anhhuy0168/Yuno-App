@@ -1,17 +1,16 @@
-
-
 {
-    "rewrites": [
-      { "source": "/login", "destination": "/login" },
-      { "source": "/productDetail/:id", "destination": "/productDetail/:id" },
-      { "source": "/productCart", "destination": "/productCart" },
-      { "source": "/profile", "destination": "/profile" },
-      { "source": "/changePass", "destination": "/changePass" },
-      { "source": "/account", "destination": "/account" },
-      { "source": "/order", "destination": "/order" },
-      { "source": "/paymentHistory", "destination": "/paymentHistory" },
-      { "source": "/search", "destination": "/search" },
-      { "source": "/(.*)", "destination": "/" }
-    ]
-  }
-  
+  "redirects": [
+    { "source": "/login", "destination": "/index.html" },
+    { "source": "/productDetail/:id", "destination": "/index.html" },
+    { "source": "/productCart", "destination": "/index.html" },
+    { "source": "/profile", "destination": "/index.html" },
+    { "source": "/changePass", "destination": "/index.html" },
+    { "source": "/account", "destination": "/index.html" },
+    { "source": "/order", "destination": "/index.html" },
+    { "source": "/paymentHistory", "destination": "/index.html" },
+    { "source": "/search", "destination": "/index.html" }
+  ],
+  "rewrites": [
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
