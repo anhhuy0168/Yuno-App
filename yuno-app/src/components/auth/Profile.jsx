@@ -157,9 +157,11 @@ const Profile = () => {
                   Add profile
                 </button>
               )}
-
-              <Link to="/changePass">
+                 <Link to="/changePass">
                 <button>Change Pass</button>
+              </Link>
+              <Link to="/paymentHistory">
+                <button>Order History</button>
               </Link>
               <button onClick={handleLogout}>Logout</button>
             </div>
