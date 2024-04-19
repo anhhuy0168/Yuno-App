@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { FaStar } from "react-icons/fa";
 const ProductFeatured = () => {
   return (
     <>
@@ -21,11 +21,11 @@ const ProductFeatured = () => {
                   </div>
                   <div className="showcase-content">
                     <div className="showcase-rating">
-                      <ion-icon name="star" />
-                      <ion-icon name="star" />
-                      <ion-icon name="star" />
-                      <ion-icon name="star-outline" />
-                      <ion-icon name="star-outline" />
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
                     </div>
                     <a href="#">
                       <h3 className="showcase-title">
@@ -87,11 +87,11 @@ const ProductFeatured = () => {
                   </div>
                   <div className="showcase-content">
                     <div className="showcase-rating">
-                      <ion-icon name="star" />
-                      <ion-icon name="star" />
-                      <ion-icon name="star" />
-                      <ion-icon name="star-outline" />
-                      <ion-icon name="star-outline" />
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
                     </div>
                     <h3 className="showcase-title">
                       <a href="#" className="showcase-title">

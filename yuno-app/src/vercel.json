@@ -1,0 +1,17 @@
+
+
+{
+    "rewrites": [
+      { "source": "/login", "destination": "/login" },
+      { "source": "/productDetail/:id", "destination": "/productDetail/:id" },
+      { "source": "/productCart", "destination": "/productCart" },
+      { "source": "/profile", "destination": "/profile" },
+      { "source": "/changePass", "destination": "/changePass" },
+      { "source": "/account", "destination": "/account" },
+      { "source": "/order", "destination": "/order" },
+      { "source": "/paymentHistory", "destination": "/paymentHistory" },
+      { "source": "/search", "destination": "/search" },
+      { "source": "/(.*)", "destination": "/" }
+    ]
+  }
+  

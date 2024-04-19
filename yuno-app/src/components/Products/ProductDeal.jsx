@@ -1,5 +1,5 @@
 import React from 'react'
-import { Carousel } from "antd";
+import { FaStar } from "react-icons/fa";
 const ProductDeal = ({ product, timeCount }) => {
   return (
     <div className="product-featured">
@@ -17,11 +17,11 @@ const ProductDeal = ({ product, timeCount }) => {
           </div>
           <div className="showcase-content">
             <div className="showcase-rating">
-              <ion-icon name="star" />
-              <ion-icon name="star" />
-              <ion-icon name="star" />
-              <ion-icon name="star-outline" />
-              <ion-icon name="star-outline" />
+            <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
             </div>
             <a href="#">
               <h3 className="showcase-title">
@@ -87,11 +87,11 @@ const ProductDeal = ({ product, timeCount }) => {
           </div>
           <div className="showcase-content">
             <div className="showcase-rating">
-              <ion-icon name="star" />
-              <ion-icon name="star" />
-              <ion-icon name="star" />
-              <ion-icon name="star-outline" />
-              <ion-icon name="star-outline" />
+            <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
+                    <FaStar style={{color:"yellow"}}/>
             </div>
             <a href="#">
               <h3 className="showcase-title">

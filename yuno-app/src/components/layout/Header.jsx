@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../context/cartContext";
 import { useContext } from "react";
 import { ProductContext } from "../context/productContext";
-import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
@@ -13,6 +12,7 @@ const Header = () => {
   const [user, setUser] = useState(null);
   const [productCart, setProductCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  
 
   const {
     cartState: { cart },
@@ -30,7 +30,14 @@ const Header = () => {
     const userData = getUserFromLocalStorage();
     setUser(userData);
   }, []);
-
+  useEffect(() => {
+    if (cart[0]?.product && products.length) {
+      const updatedProductCart = products.filter((product) =>
+        cart[0].product.some((item) => item.productIds === product.id)
+      );
+      setProductCart(updatedProductCart);
+    }
+  }, [cart, products]);
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };

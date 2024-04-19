@@ -1,18 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-const ProductGrid = ({randomProductsList}) => {
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
+const ProductGrid = ({ randomProductsList }) => {
   return (
     <main>
       <div className="product-container">
-        <div >
-        <div className="product-box">
-        <div className="product-main">
-                <h2 className="title">New Products</h2>
-                <div className="product-grid">
-                  {randomProductsList.map((product, index) => (
-                    <div className="showcase" key={index} style={{cursor:"pointer"}}>
-                          <Link to={`/productDetail/${product.id}`}>
-                          <div className="showcase-banner">
+        <div>
+          <div className="product-box">
+            <div className="product-main">
+              <h2 className="title">New Products</h2>
+              <div className="product-grid">
+                {randomProductsList.map((product, index) => (
+                  <div
+                    className="showcase"
+                    key={index}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Link to={`/productDetail/${product.id}`}>
+                      <div className="showcase-banner">
                         <img
                           src={product.productImage}
                           alt={product.productName}
@@ -31,36 +36,32 @@ const ProductGrid = ({randomProductsList}) => {
                         <span href="#" className="showcase-category">
                           {product.category}
                         </span>
-            
-                          <h3 className="showcase-title">
-                            {product.productName}
-                          </h3>
-                
-                        {/* <div className="showcase-rating">
-                          <ion-icon name="star" />
-                          <ion-icon name="star" />
-                          <ion-icon name="star" />
-                          <ion-icon name="star-outline" />
-                          <ion-icon name="star-outline" />
-                        </div> */}
+
+                        <h3 className="showcase-title">
+                          {product.productName}
+                        </h3>
+
+                        <div className="showcase-rating">
+                          <FaStar size={10} style={{ color: "yellow" }} />
+                          <FaStar size={10} style={{ color: "yellow" }} />
+                          <FaStar size={10} style={{ color: "yellow" }} />
+                          <FaStar size={10} style={{ color: "yellow" }} />
+                          <FaStar size={10} style={{ color: "yellow" }} />
+                        </div>
                         <div className="price-box">
                           <p className="price">${product.salePrice}</p>
                           <del>${product.currentPrice}</del>
                         </div>
-                        
                       </div>
                     </Link>
-                      
-                    </div>
-                  ))}
-                </div>
-    </div>
-    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
-
- 
-  )
-}
-export default ProductGrid
+  );
+};
+export default ProductGrid;

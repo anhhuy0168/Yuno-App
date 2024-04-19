@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getInformationUser } from "../localStorage";
+import { FaStar } from "react-icons/fa";
 const ProductDetail = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);

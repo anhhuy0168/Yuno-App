@@ -5,10 +5,31 @@ import {
   FaRegUserCircle,
 } from "react-icons/fa";
 import { getCartTotalQuantity ,getUserFromLocalStorage} from '../localStorage';
+import  { useEffect, useState,useContext } from "react";
 import { Link } from "react-router-dom";
+import { CartContext } from '../context/cartContext';
+import { ProductContext } from '../context/productContext';
 const NavBarMobile = () => {
   const cartTotalQuantity = getCartTotalQuantity();
   const user = getUserFromLocalStorage()
+  const [productCart, setProductCart] = useState([]);
+  const {
+    cartState: { cart },
+    getCart,
+  } = useContext(CartContext);
+  
+  const {
+    productState: { products },
+    getProduct,
+  } = useContext(ProductContext);
+  useEffect(() => {
+    if (cart[0]?.product && products.length) {
+      const updatedProductCart = products.filter((product) =>
+        cart[0].product.some((item) => item.productIds === product.id)
+      );
+      setProductCart(updatedProductCart);
+    }
+  }, [cart, products]);
   return (
     <div className="mobile-bottom-navigation">
     <button className="action-btn">
@@ -17,7 +38,7 @@ const NavBarMobile = () => {
           name="bag-handle-outline"
           style={{ color: "white" }}
         />
-        <span className="count">{cartTotalQuantity}</span>
+        <span className="count">{productCart.length}</span>
       </Link>
     </button>
     <button className="action-btn">

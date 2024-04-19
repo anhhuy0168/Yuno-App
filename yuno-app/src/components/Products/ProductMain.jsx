@@ -49,11 +49,11 @@ const ProductMain = () => {
                     </h3>
                   </a>
                   <div className="showcase-rating">
-                    <ion-icon name="star" />
-                    <ion-icon name="star" />
-                    <ion-icon name="star" />
-                    <ion-icon name="star-outline" />
-                    <ion-icon name="star-outline" />
+                  <FaStar size={10} style={{color:"yellow" }}/>
+                        <FaStar  size={10}style={{color:"yellow"}}/>
+                        <FaStar  size={10}style={{color:"yellow"}}/>
+                        <FaStar  size={10}style={{color:"yellow"}}/>
+                        <FaStar  size={10}style={{color:"yellow"}}/>
                   </div>
                   <div className="price-box">
                     <p className="price">$48.00</p>
