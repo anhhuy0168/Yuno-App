@@ -70,6 +70,9 @@ const ProductDetail = () => {
     const userFromLocalStorage = getUserFromLocalStorage();
     setUser(userFromLocalStorage);
   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Header />

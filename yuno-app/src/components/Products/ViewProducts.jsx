@@ -24,10 +24,9 @@ const ViewProducts = () => {
         <h2 className="title">New Arrivals</h2>
         <div className="showcase-wrapper has-scrollbar">
           <div className="showcase-container">
-
             {randomProducts1.map((product, index) => (
                      <Link to={`/productDetail/${product.id}`}>
-              <div className="showcase" key={index}>
+              <div className="showcase" key={index} style={{marginBottom:"10px"}}>
                 <a href="#" className="showcase-img-box">
                   <img
                     src={product.productImage}
@@ -57,11 +56,11 @@ const ViewProducts = () => {
       <div className="product-showcase">
         <h2 className="title">Trending</h2>
         <div className="showcase-wrapper has-scrollbar">
-          <div className="showcase-container">
+          <div className="showcase-container" >
             {/* Hiển thị randomProducts2 */}
             {randomProducts2.map((product, index) => (
                  <Link to={`/productDetail/${product.id}`}>
-                 <div className="showcase" key={index}>
+                 <div className="showcase" key={index} style={{marginBottom:"10px"}}>
                    <a href="#" className="showcase-img-box">
                      <img
                        src={product.productImage}

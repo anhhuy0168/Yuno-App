@@ -238,6 +238,26 @@ const Wrapper  = styled.section`
     height: 40px;
     width: 40px;
   }
+  /* Thêm CSS cho các kích thước màn hình nhỏ hơn 768px */
+  @media screen and (max-width: 768px) {
+      .container-submit {
+        margin:50px;
+      }
+  
+     
+  }
+  
+  /* Thêm CSS cho các kích thước màn hình nhỏ hơn 480px */
+  @media screen and (max-width: 480px) {
+      .form-container,
+      .overlay-container {
+          width: 100%;
+      }
+  
+      .overlay-panel {
+          padding: 0 20px;
+      }
+  }
   
 `;
 const StyledBody = styled.body`

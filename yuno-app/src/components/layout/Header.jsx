@@ -87,7 +87,7 @@ const Header = () => {
           <button className="action-btn">
             {user ? (
               <Link to={"/profile"}>
-                <FaRegUserCircle name="person-outline" style={{ color: "red" }} />
+                <FaRegUserCircle name="person-outline" style={{ color: "gray" }} />
               </Link>
             ) : (
               <Link to={"/account"} style={{ color: "red" }}>
@@ -97,7 +97,7 @@ const Header = () => {
           </button>
           <button className="action-btn">
             <Link to={user ? "/productCart" : "/account"}>
-              <FaShoppingBag name="bag-handle-outline" style={{ color: "red" }} />
+              <FaShoppingBag name="bag-handle-outline" style={{ color: "gray" }} />
               <span className="count">{productCart.length}</span>
             </Link>
           </button>

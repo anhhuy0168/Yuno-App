@@ -35,15 +35,16 @@ const NavBarMobile = () => {
     <button className="action-btn">
       <Link to={"/productCart"}>
         <FaShoppingBag
+        size={25}
           name="bag-handle-outline"
-          style={{ color: "white" }}
+          style={{ color: "gray" }}
         />
         <span className="count">{productCart.length}</span>
       </Link>
     </button>
     <button className="action-btn">
       <Link to={"/"}>
-        <FaHome name="home-outline" style={{ color: "white" }} />
+        <FaHome name="home-outline" size={25} style={{ color: "gray" }} />
       </Link>
     </button>
     <button className="action-btn" data-mobile-menu-open-btn="">
@@ -51,14 +52,16 @@ const NavBarMobile = () => {
                     {user ? (
                       <Link to={"/profile"}>
                          <FaRegUserCircle
+                          size={25}
                         name="person-outline"
-                        style={{ color: "white" }}
+                        style={{ color: "gray" }}
                       />
                       </Link>
                     ) : (
                       <FaRegUserCircle
+                      size={25}
                         name="person-outline"
-                        style={{ color: "white" }}
+                        style={{ color: "gray" }}
                       />
                     )}
                   </Link>

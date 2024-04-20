@@ -4,7 +4,7 @@ import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import Wrapper from "../../Style/PaymentHistory";
 import Header from "../layout/Header";
-import NavBarMobile from "../layout/NavBarMobile"
+import NavBarMobile from "../layout/NavBarMobile";
 const PaymentHistory = () => {
   const users = getUserFromLocalStorage();
   const [orders, setOrders] = useState([]);
@@ -78,14 +78,20 @@ const PaymentHistory = () => {
                     ))}
                   </td>
                   <td>{order.total}$</td>
-                  <td>{order.status}</td>
+                  <td>
+                    {order.status === "pending" ? (
+                      <p>Pending</p>
+                    ) : (
+                      <p>Pending</p>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </Wrapper>
-      <NavBarMobile/>
+      <NavBarMobile />
     </>
   );
 };

@@ -7,9 +7,10 @@ const Wrapper  = styled.section`
   }
   
   .profile-user__info {
-    background-color: #f9f9f9;
+    background-color: #C0C0C0;
     border-radius: 10px;
     padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .profile-user__name {

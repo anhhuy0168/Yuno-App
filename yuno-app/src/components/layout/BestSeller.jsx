@@ -2,7 +2,7 @@ import React from 'react'
 import { IoMdStar } from "react-icons/io";
 const BestSeller = (randomProducts) => {
   return (
-    <div className="product-showcase">
+    <div className="product-showcase"style={{ border: '1px solid #ddd', padding: '20px' ,borderRadius:"3%"}}>
     <h3 className="showcase-heading">best sellers</h3>
     <div className="showcase-wrapper">
       <div className="showcase-container">
