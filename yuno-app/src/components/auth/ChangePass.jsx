@@ -1,15 +1,15 @@
 import React from "react";
 import { auth } from "../../firebase-config";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { Button, Checkbox, Form, Input } from "antd";
-import { ToastContainer, toast,Bounce } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import { Link } from "react-router-dom";
 const ChangePass = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const emalVal = e.target.email.value;
     sendPasswordResetEmail(auth, emalVal)
       .then((data) => {
-        toast.success('Check Your Email!', {
+        toast.success("Check Your Email!", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -19,10 +19,10 @@ const ChangePass = () => {
           progress: undefined,
           theme: "colored",
           transition: Bounce,
-          });
+        });
       })
       .catch((err) => {
-        toast.error('Error !!', {
+        toast.error("Error !!", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -32,61 +32,72 @@ const ChangePass = () => {
           progress: undefined,
           theme: "colored",
           transition: Bounce,
-          });
+        });
       });
   };
   return (
     <>
-      {/* <Form
+      <ToastContainer />
+      <form
         onSubmit={(e) => handleSubmit(e)}
-        required
-        name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
         style={{
-          maxWidth: 600,
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "10%",
-          marginLeft: "10%",
+
+          margin:"90px auto",
+          maxWidth: "400px",
+          textAlign: "center",
+          backgroundColor: "#f2f2f2",
+          padding: "20px",
+          borderRadius: "5px",
+          boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
         }}
-        initialValues={{
-          remember: true,
-        }}
-        autoComplete="off"
       >
-        <Form.Item
-          label="Email"
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: "Please input your email!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
+        <input
+          required
+          name="email"
+          placeholder="Enter email"
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "0px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+            boxSizing: "border-box",
+          }}
+        />
+        <br />
+        <br />
+        <button
+          style={{
+            backgroundColor: "#4CAF50",
+            color: "white",
+            padding: "14px 20px",
+            margin: "8px 0",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            width: "100%",
           }}
         >
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form> */}
-<ToastContainer/>
-      <form onSubmit={(e)=> handleSubmit(e)}>
-        <input required name="email" placeholder='Enter email'></input><br /><br />
-        <button>Reset</button>
-    </form>
+          Reset
+        </button>
+        <Link to="/profile">
+        <button
+          style={{
+            backgroundColor: "#4CAF50",
+            color: "white",
+            padding: "14px 20px",
+            margin: "8px 0",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            width: "100%",
+          }}
+        >
+          Back
+        </button>
+        </Link>
+       
+      </form>
     </>
   );
 };

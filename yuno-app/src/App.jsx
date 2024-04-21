@@ -20,6 +20,7 @@ function App() {
         <ProductContextProvider>
           <CartContextProvider>
             <BrowserRouter>
+            
               <Routes>
                 <Route path="/" element={<Navbar />} />
                 <Route path="/login" element={<Login />} />
