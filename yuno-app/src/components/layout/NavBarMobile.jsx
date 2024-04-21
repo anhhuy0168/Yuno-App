@@ -48,7 +48,7 @@ const NavBarMobile = () => {
       </Link>
     </button>
     <button className="action-btn" data-mobile-menu-open-btn="">
-    <Link to={"/account"}>
+    <Link to={"/login"}>
                     {user ? (
                       <Link to={"/profile"}>
                          <FaRegUserCircle

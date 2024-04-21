@@ -16,7 +16,7 @@ const ProductDeal = ({ product, timeCount }) => {
   const selectedProduct = products.find((products) => products.id === product[0]?.id);
   const handleAddToCart = async () => {
     if(user==null){
-      navigate("/account")
+      navigate("/login")
       alert("Please Login !!!")
     }
     else{

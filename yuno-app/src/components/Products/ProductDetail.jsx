@@ -50,7 +50,7 @@ const ProductDetail = () => {
         transition: Bounce,
         });
         setTimeout(async () => {
-          navigate("/account");
+          navigate("/login");
        }, 2000); 
     }
     else{
@@ -75,7 +75,7 @@ const ProductDetail = () => {
       transition: Bounce,
         });
         setTimeout(async () => {
-          navigate("/account");
+          navigate("/login");
        }, 2000); 
     }
    else if(!information ||!information.address||!information.phoneNumber){

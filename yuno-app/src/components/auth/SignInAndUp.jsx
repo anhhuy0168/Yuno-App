@@ -293,7 +293,7 @@ const SignInAndUp = () => {
     "container-submit " + (type === "signUp" ? "right-panel-active" : "");
   return (
     <>
-    <Header/>
+    {/* <Header/>
       <Helmet>
         <link
           rel="stylesheet"
@@ -342,7 +342,7 @@ const SignInAndUp = () => {
         </div>
       </div>
         </Wrapper>
-      </StyledBody>
+      </StyledBody> */}
        
    
     </>

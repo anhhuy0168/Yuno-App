@@ -90,13 +90,13 @@ const Header = () => {
                 <FaRegUserCircle name="person-outline" style={{ color: "gray" }} />
               </Link>
             ) : (
-              <Link to={"/account"} style={{ color: "red" }}>
+              <Link to={"/login"} style={{ color: "gray" }}>
                 <FaRegUserCircle />
               </Link>
             )}
           </button>
           <button className="action-btn">
-            <Link to={user ? "/productCart" : "/account"}>
+            <Link to={user ? "/productCart" : "/login"}>
               <FaShoppingBag name="bag-handle-outline" style={{ color: "gray" }} />
               <span className="count">{productCart.length}</span>
             </Link>
