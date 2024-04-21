@@ -17,6 +17,7 @@ import {
   ADDPRODUCTTOCART,
 } from "./constants";
 import { getUserFromLocalStorage } from "../localStorage";
+import { ToastContainer, toast } from 'react-toastify';
 export const CartContext = createContext();
 const CartContextProvider = ({ children }) => {
   const cartCollectionRef = collection(db, "cart");
@@ -100,7 +101,7 @@ const CartContextProvider = ({ children }) => {
           existingProductIds.includes(productId)
         );
         if (isDuplicate) {
-          alert("Sản phẩm đã tồn tại trong giỏ hàng");
+          window.alert("Sản phẩm đã tồn tại trong giỏ hàng");
         } else {
           const newProduct = { productIds: newProductIds, amount: amount };
           await updateDoc(cartDoc, {

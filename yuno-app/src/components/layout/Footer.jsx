@@ -337,7 +337,7 @@ const Footer = () => {
     <div className="footer-bottom">
       <div className="container">
         <img
-          src="../src/assets/images/payment.png"
+          src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1713624940/kaqkvmns8a3pqe7dnu4u.png"
           alt="payment method"
           className="payment-img"
         />

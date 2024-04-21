@@ -1,6 +1,34 @@
 import React from 'react'
 import { FaStar } from "react-icons/fa";
+import { getUserFromLocalStorage } from '../localStorage';
+import { useContext, useEffect, useState } from "react";
+import { ProductContext } from '../context/productContext';
+import { CartContext } from '../context/cartContext';
 const ProductDeal = ({ product, timeCount }) => {
+  const [user, setUser] = useState(null);
+  const {
+    productState: { products },
+    getProduct,
+  } = useContext(ProductContext);
+  const { addProductToCart } = useContext(CartContext);
+  const selectedProduct = products.find((products) => products.id === product[0]?.id);
+  const handleAddToCart = async () => {
+    if(user==null){
+      navigate("/account")
+      alert("Please Login !!!")
+    }
+    else{
+      const productId = selectedProduct?.id;
+      const userId = user.uid;
+      const amount = 1
+      await addProductToCart(userId, productId, amount);
+    }
+
+  };
+  useEffect(() => {
+    const userFromLocalStorage = getUserFromLocalStorage();
+    setUser(userFromLocalStorage);
+  }, []);
   return (
     <div className="product-featured">
     <h2 className="title">Deal of the day</h2>
@@ -38,7 +66,7 @@ const ProductDeal = ({ product, timeCount }) => {
               </p>
               <del>${product[0]?.currentPrice}</del>
             </div>
-            <button className="add-cart-btn">add to cart</button>
+            <button className="add-cart-btn" onClick={handleAddToCart}>add to cart</button>
             <div className="showcase-status">
               <div className="wrapper">
                 <p>

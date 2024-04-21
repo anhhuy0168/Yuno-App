@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getInformationUser } from "../localStorage";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { FaStar } from "react-icons/fa";
 const ProductDetail = () => {
   const { id } = useParams();
@@ -37,24 +38,61 @@ const ProductDetail = () => {
   };
   const handleAddToCart = async () => {
     if(user==null){
-      navigate("/account")
-      alert("Please Login !!!")
+      toast.error('Please Login !!!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+        });
+        setTimeout(async () => {
+          navigate("/account");
+       }, 2000); 
     }
     else{
       const productId = selectedProduct?.id;
       const userId = user.uid;
       await addProductToCart(userId, productId, amount);
+      
     }
 
   };
   const handleBuyProduct = async () => {
     if(user==null){
-      navigate("/account")
-      alert("Please Login !!!")
+      toast.error('Please Login !!!', {
+        position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+        });
+        setTimeout(async () => {
+          navigate("/account");
+       }, 2000); 
     }
    else if(!information ||!information.address||!information.phoneNumber){
-      navigate("/profile")
-      alert("Please add information !!!")
+    toast.error('Please add information !!!', {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      });
+      setTimeout(async () => {
+        navigate("/profile");
+     }, 2000); 
     }
     else{
       const userId = user.uid;
@@ -77,6 +115,7 @@ const ProductDetail = () => {
     <>
       <Header />
       <Wrapper>
+        <ToastContainer/>
         <div className="small-container products-details">
           <div className="row">
             <div className="col-2">

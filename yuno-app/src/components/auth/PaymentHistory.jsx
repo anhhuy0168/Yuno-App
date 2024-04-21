@@ -5,6 +5,7 @@ import { db } from "../../firebase-config";
 import Wrapper from "../../Style/PaymentHistory";
 import Header from "../layout/Header";
 import NavBarMobile from "../layout/NavBarMobile";
+
 const PaymentHistory = () => {
   const users = getUserFromLocalStorage();
   const [orders, setOrders] = useState([]);
@@ -27,7 +28,6 @@ const PaymentHistory = () => {
 
     fetchOrders();
   }, []); // Add users to the dependency array
-  console.log(orders);
   return (
     <>
       <Header />
@@ -49,41 +49,44 @@ const PaymentHistory = () => {
                   <td>{order.id}</td>
                   <td>{order.address}</td>
                   <td>
-                    {order.product.map((product, index) => (
-                      <div
-                        key={index}
-                        className="product-item"
-                        style={{ display: "flex" }}
-                      >
-                        <div>
-                          <img
-                            src={product.productImage}
-                            width={50}
-                            height={50}
-                            alt={product.productName}
-                          />
-                        </div>
-                        <div>
-                          <p className="product-details">
-                            {product.productName}
-                          </p>
-                          <p className="product-details">
-                            Sale Price: {product.salePrice}$
-                          </p>
-                          <p className="product-details">
-                            Amount: {product.amount}
-                          </p>
-                        </div>
+                    {/* Loop through the products of the current order */}
+                    {Object.values(order.product).map((productObj, idx) => (
+                      <div key={idx}>
+                        {Object.values(productObj).map(
+                          (product, productIdx) => (
+                            <div
+                              key={productIdx}
+                              className="product-item"
+                              style={{ display: "flex" }}
+                            >
+                              <div>
+                                <img
+                                  src={product.productImage}
+                                  width={50}
+                                  height={50}
+                                  alt={product.productName}
+                                />
+                              </div>
+                              <div>
+                                <p className="product-details">
+                                  {product.productName}
+                                </p>
+                                <p className="product-details">
+                                  Sale Price: {product.salePrice}$
+                                </p>
+                                <p className="product-details">
+                                  Amount: {product.amount}
+                                </p>
+                              </div>
+                            </div>
+                          )
+                        )}
                       </div>
                     ))}
                   </td>
                   <td>{order.total}$</td>
                   <td>
-                    {order.status === "pending" ? (
-                      <p>Pending</p>
-                    ) : (
-                      <p>Pending</p>
-                    )}
+                    {order.status === "pending" ? "Pending" : "Completed"}
                   </td>
                 </tr>
               ))}

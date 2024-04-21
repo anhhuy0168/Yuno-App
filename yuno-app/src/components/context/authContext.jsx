@@ -41,25 +41,36 @@ const AuthContextProvider = ({ children }) => {
           alert(error);
         }
       };
-      const Login = async (email,password) => {
+      const Login = async (email, password) => {
         try {
           const usersCollectionRef = collection(db, "users");
           const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          
           if (userCredential.user.accessToken) {
             const user = {
               email: userCredential.user.email,
               uid: userCredential.user.uid,
             };
+            
             const data = await getDocs(usersCollectionRef);
-            const dataProducts =  data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+            const dataProducts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
             const productIds = dataProducts.filter((user) => user.uid === dataUser?.uid);
+            
             localStorage.setItem("informationUser", JSON.stringify(productIds[0]));
             localStorage.setItem('user', JSON.stringify(user));
             dispatch({ type: USER_LOGIN_SUCCESS, payload: userCredential });
             dispatch({ type: GET_USER_SUCCESS, payload: user });
           }
         } catch (error) {
-          dispatch({ type: USER_LOGIN_FAIL });
+          // Xử lý lỗi từ hàm signInWithEmailAndPassword
+          if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+            // Xử lý trường hợp người dùng nhập sai email hoặc mật khẩu ở đây
+            console.error("Email hoặc mật khẩu không chính xác");
+            dispatch({ type: USER_LOGIN_FAIL, error: "Email hoặc mật khẩu không chính xác" });
+          } else {
+            // Xử lý các trường hợp lỗi khác
+            dispatch({ type: USER_LOGIN_FAIL, error: "Đã xảy ra lỗi khi đăng nhập" });
+          }
         }
       };
   const productContextData = {

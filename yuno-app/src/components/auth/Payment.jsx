@@ -75,13 +75,14 @@ const Payment = ({ total, productCart }) => {
         description: "Yuno-App",
       });
       if (Array.isArray(productCart)) {
-        const productArray = Object.values(productCart).map(product => ({
-          ...product,
-          amount: product.amount
-        }));
+        const productObject = productCart.reduce((obj, product, index) => {
+          obj[index] = product;
+          return obj;
+        }, {});
+        console.log(productObject);
         await addDoc(ordersCollectionRef, {
           user: user.name,
-          product: productArray,
+          product: [productObject],
           status: "pending",
           total: total * 100,
           uid: user.uid,
@@ -91,9 +92,14 @@ const Payment = ({ total, productCart }) => {
         alert("DONEEEEEEEEEEEEEEE");
         navigate("/profile");
       } else {
+        const arrayData = Object.values({productCart});
+        const productObject = arrayData.reduce((obj, product, index) => {
+          obj[index] = product;
+          return obj;
+        }, {});
         await addDoc(ordersCollectionRef, {
           user: user.name,
-          product: [productCart],
+          product: [productObject],
           status: "pending",
           total: total * 100,
           uid: user.uid,

@@ -12,7 +12,7 @@ const ProductCart = () => {
   const user = getUserFromLocalStorage();
   const information = getInformationUser();
   const navigate = useNavigate();
-  
+  const [combinedData, setCombinedData] = useState([]);
   const {
     cartState: { cart },
     getCart,
@@ -69,6 +69,16 @@ const ProductCart = () => {
     deleteProductCart(user.uid, productId);
   };
 
+  useEffect(() => {
+    // Tạo một mảng mới chứa thông tin từ cả productCart và quantity
+    const newCombinedData = productCart.map((product, index) => ({
+      ...product,
+      amount: quantity[index] || 0
+    }));
+    setCombinedData(newCombinedData);
+  }, [productCart, quantity]);
+
+  console.log(combinedData);
   return (
     <>
       <Header />
@@ -160,7 +170,7 @@ const ProductCart = () => {
                             );
                           }, 0) + 30
                         }
-                        productCart={productCart}
+                        productCart={combinedData}
                       />
                     </div>
                   )}

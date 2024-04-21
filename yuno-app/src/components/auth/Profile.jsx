@@ -14,7 +14,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase-config";
-
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 const Profile = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -38,6 +38,24 @@ const Profile = () => {
     try {
       if (informationUser) {
         //edit information
+        const isNameChanged = editedInfo.displayName !== informationUser.name;
+        const isPhoneNumberChanged = editedInfo.phoneNumber !== informationUser.phoneNumber;
+        const isAddressChanged = editedInfo.address !== informationUser.address;
+  
+        if (!isNameChanged && !isPhoneNumberChanged && !isAddressChanged) {
+          toast.error('No Information Changed!!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+            });
+          return; // Không thực hiện thêm bước nào nếu không có thay đổi
+        }
         const userDoc = doc(db, "users", informationUser.id);
         const newFields = {
           uid: user.uid,
@@ -62,8 +80,21 @@ const Profile = () => {
           JSON.stringify(informationUser)
         );
       }
-      alert("done");
-      navigate(0); // Quay lại trang trước đó trong lịch sử duyệt
+      toast.success('Edit Success!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+        });
+        setTimeout(async () => {
+          navigate(0); 
+       }, 2000); 
+    // Quay lại trang trước đó trong lịch sử duyệt
     } catch (error) {
       console.log(error);
     }
@@ -102,11 +133,11 @@ const Profile = () => {
     localStorage.clear();
     navigate("/");
   };
-
   return (
     <>
       <Header />
       <Wapper>
+      <ToastContainer />
         <div className="profile-user">
           {isEditing ? (
             <form
@@ -125,7 +156,7 @@ const Profile = () => {
                 type="text"
                 name="displayName"
                 placeholder="Display name"
-                value={editedInfo.displayName}
+                value={editedInfo?.displayName}
                 onChange={handleInputChange}
                 required
                 style={{
@@ -144,7 +175,7 @@ const Profile = () => {
                 type="text"
                 name="phoneNumber"
                 placeholder="Phone Number"
-                value={editedInfo.phoneNumber}
+                value={editedInfo?.phoneNumber}
                 onChange={handleInputChange}
                 required
                 style={{
@@ -163,7 +194,7 @@ const Profile = () => {
                 type="text"
                 name="address"
                 placeholder="Address"
-                value={editedInfo.address}
+                value={editedInfo?.address}
                 onChange={handleInputChange}
                 required
                 style={{
@@ -190,7 +221,7 @@ const Profile = () => {
             </form>
           ) : (
             <>
-              {informationUser ? (
+
                 <div className="profile-user__info">
                   <h2 className="profile-user__name">
                     Name: {informationUser?.name}
@@ -266,9 +297,7 @@ const Profile = () => {
                     Logout
                   </button>
                 </div>
-              ) : (
-                <Skeleton active />
-              )}
+           
             </>
           )}
         </div>

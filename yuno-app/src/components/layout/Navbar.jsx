@@ -17,7 +17,7 @@ const Navbar = () => {
             </button>
             <div className="toast-banner">
               <img
-                src="../src/assets/images/products/jewellery-1.jpg"
+                src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1712034911/jewellery-1_p7rslh.jpg"
                 alt="Rose Gold Earrings"
                 width={80}
                 height={70}
