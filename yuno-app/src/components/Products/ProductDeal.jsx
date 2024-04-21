@@ -4,7 +4,9 @@ import { getUserFromLocalStorage } from '../localStorage';
 import { useContext, useEffect, useState } from "react";
 import { ProductContext } from '../context/productContext';
 import { CartContext } from '../context/cartContext';
+import { useNavigate } from 'react-router-dom';
 const ProductDeal = ({ product, timeCount }) => {
+  const navigate = useNavigate()
   const [user, setUser] = useState(null);
   const {
     productState: { products },
