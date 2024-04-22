@@ -55,7 +55,7 @@ const Header = () => {
   return (
     <div className="header-main">
       <div className="container">
-        <Link to={"/"}>
+        <Link to="/" style={{cursor:"pointer",zIndex:"1"}}>
           <span href="#" className="header-logo">
             <img
               src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1712917412/1npjxlfvmb071_wy4r9g.webp"
