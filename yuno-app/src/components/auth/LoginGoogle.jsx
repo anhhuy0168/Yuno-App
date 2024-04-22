@@ -47,12 +47,11 @@ const LoginGoogle = ({ onClick }) => {
     };
     return (
       <div className="wrapper">
-        <div className='box'>
+        <div className='box'style={{cursor:"pointer",margin:"20px 10px 10px 10px"}}>
         <ToastContainer />
-              <button className='btn btn-danger btn-md'
-                onClick={handleGoogleSignIn}>
-                <FaGoogle/>
-              </button>  
+        <FaGoogle size={25} onClick={handleGoogleSignIn} >
+
+        </FaGoogle>
         </div>
       </div>
     );

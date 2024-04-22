@@ -30,13 +30,7 @@ const AuthContextProvider = ({ children }) => {
     
     const Register = async (email,password) => {
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-            if (userCredential.user.accessToken) {
-                alert("dang ki thanh cong")
-              }
-              else{
-                alert("error");
-              }
+            await createUserWithEmailAndPassword(auth, email, password)
         } catch (error) {
           alert(error);
         }
@@ -65,7 +59,7 @@ const AuthContextProvider = ({ children }) => {
           // Xử lý lỗi từ hàm signInWithEmailAndPassword
           if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
             // Xử lý trường hợp người dùng nhập sai email hoặc mật khẩu ở đây
-            console.error("Email hoặc mật khẩu không chính xác");
+            alert("Email hoặc mật khẩu không chính xác");
             dispatch({ type: USER_LOGIN_FAIL, error: "Email hoặc mật khẩu không chính xác" });
           } else {
             // Xử lý các trường hợp lỗi khác

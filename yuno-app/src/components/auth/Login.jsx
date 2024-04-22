@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect,useRef  } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 import NavBarMobile from "../layout/NavBarMobile";
@@ -246,34 +246,21 @@ const Login = () => {
     try {
       if (email || password) {
         await Login(email, password);
-        if (!user || user?.uid == null) {
-          toast.error("Incorect Email or Password !!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Bounce,
-          });
-        } else {
-          toast.success("Login Success!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Bounce,
-          });
-          setTimeout(async () => {
-            navigate("/");
-          }, 2000);
-        }
+
+        toast.success("Login Success!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+        setTimeout(async () => {
+          navigate("/");
+        }, 2000);
       } else {
         alert("Đã xảy ra lỗi khi đăng nhập");
       }
@@ -294,24 +281,24 @@ const Login = () => {
   };
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
-  
+
   const handleEmailFocus = () => {
     const parent = emailInputRef.current.parentNode.parentNode;
     parent.classList.add("focus");
   };
-  
+
   const handleEmailBlur = () => {
     const parent = emailInputRef.current.parentNode.parentNode;
     if (emailInputRef.current.value === "") {
       parent.classList.remove("focus");
     }
   };
-  
+
   const handlePasswordFocus = () => {
     const parent = passwordInputRef.current.parentNode.parentNode;
     parent.classList.add("focus");
   };
-  
+
   const handlePasswordBlur = () => {
     const parent = passwordInputRef.current.parentNode.parentNode;
     if (passwordInputRef.current.value === "") {
@@ -321,8 +308,8 @@ const Login = () => {
   return (
     <>
       <Header />
-      <Wrapper>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <Wrapper style={{ marginTop: "-9%" }}>
+        <ToastContainer />
         <img
           className="wave"
           src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1713715988/wave_lphsxx.png"
@@ -333,10 +320,13 @@ const Login = () => {
           </div>
           <div className="login-content">
             <form onSubmit={signIn}>
-              <img src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1713715985/avatar_ltutqu.svg" style={{margin:"auto"}}/>
-              {/* <LoginGoogle onClick={handleLoginSuccess} /> */}
+              <img
+                src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1713715985/avatar_ltutqu.svg"
+                style={{ margin: "auto" }}
+              />
+
               <h2 className="title">Login</h2>
-           
+
               <div className="input-div one">
                 <div className="i">
                   <i className="fas fa-user" />
@@ -351,6 +341,7 @@ const Login = () => {
                     ref={emailInputRef}
                     onFocus={handleEmailFocus}
                     onBlur={handleEmailBlur}
+                    required
                   />
                 </div>
               </div>
@@ -364,62 +355,30 @@ const Login = () => {
                     name="password"
                     placeholder="Password"
                     value={password}
-              
                     onChange={(e) => setPassword(e.target.value)}
                     ref={passwordInputRef}
                     onFocus={handlePasswordFocus}
                     onBlur={handlePasswordBlur}
+                    required
                   />
                 </div>
               </div>
+              <LoginGoogle onClick={handleLoginSuccess} />
               <Link to="/register">
-              <a style={{textAlign:"center"}} href="#">Register?</a>
+                <a style={{ textAlign: "center" }} href="#">
+                  Register?
+                </a>
               </Link>
               <Link to="/changePass">
-              <a style={{textAlign:"center"}} href="#">Forgot Password?</a>
+                <a style={{ textAlign: "center" }} href="#">
+                  Forgot Password?
+                </a>
               </Link>
-        
-              <input type="submit" className="btn" defaultValue="Login" />
+              <button className="btn">Sign In</button>
             </form>
           </div>
         </div>
       </Wrapper>
-
-      {/* <div className="form-container sign-in-container">
-      <ToastContainer />
-        <form onSubmit={signIn} className="form-account">
-          <h1 className="title">Sign in</h1>
-          <div className="social-container">
-            <a className="social">
-            <LoginGoogle onClick={handleLoginSuccess} />
-            </a>
-          </div>
-          <span>or use your account</span>
-          <input
-            className="user-input"
-            type="email"
-            placeholder="Email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            className="user-input"
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Link to={"/changePass"}>
-          <a href="#">Forgot your password?</a>
-          </Link>
-
-          <button className="button-container">Sign In</button>
-   
-        </form>
-
-      </div> */}
       <NavBarMobile />
     </>
   );

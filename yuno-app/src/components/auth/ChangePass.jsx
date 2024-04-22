@@ -3,7 +3,9 @@ import { auth } from "../../firebase-config";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { Link } from "react-router-dom";
+import { getUserFromLocalStorage } from "../localStorage";
 const ChangePass = () => {
+  const user = getUserFromLocalStorage()
   const handleSubmit = async (e) => {
     e.preventDefault();
     const emalVal = e.target.email.value;
@@ -80,7 +82,7 @@ const ChangePass = () => {
         >
           Reset
         </button>
-        <Link to="/profile">
+      <Link to={user ? "/profile" : "/login"}>
         <button
           style={{
             backgroundColor: "#4CAF50",

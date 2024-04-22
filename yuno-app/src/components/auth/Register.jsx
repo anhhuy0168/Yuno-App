@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 import styled from "styled-components";
 import Header from "../layout/Header";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
+import { Link } from "react-router-dom";
 const Wrapper = styled.section`
   * {
     padding: 0;
@@ -232,17 +234,32 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { Register } = useContext(AuthContext);
-  const signUp = (e) => {
+  const signUp = async (e) => {
     e.preventDefault();
     if (confirmPassword === password) {
-      Register(email, password);
+     await Register(email, password);
+     toast.success('Register Success!', {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+      });
+      setTimeout(async () => {
+        navigate("/login");
+      }, 2000);
     }
   };
 
   return (
     <>
       <Header />
-      <Wrapper>
+      <Wrapper style={{marginTop:"-9%"}}>
+        <ToastContainer/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <img
           className="wave"
@@ -270,6 +287,7 @@ const Register = () => {
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
               </div>
@@ -284,6 +302,7 @@ const Register = () => {
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                 </div>
               </div>
@@ -298,37 +317,20 @@ const Register = () => {
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
                   />
                 </div>
               </div>
-              <input type="submit" className="btn" defaultValue="Register" />
+             
+              <button className="btn">Sign Up</button>
+              <Link to="/login" style={{textAlign:"center"}}>
+             Have account ? Sign In
+              </Link>
             </form>
+            
           </div>
         </div>
       </Wrapper>
-
-      {/* <div className="form-container sign-up-container">
-        <form onSubmit={signUp} className="form-account">
-          <h1 className="title">Create Account</h1>
-          <input
-          className="user-input"
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-          />
-          <input
-                    className="user-input"
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          <button className="button-container">Sign Up</button>
-        </form>
-      </div> */}
     </>
   );
 };
