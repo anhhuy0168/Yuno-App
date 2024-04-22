@@ -1,13 +1,16 @@
 import React from 'react'
 import { IoMdStar } from "react-icons/io";
+import { Link } from 'react-router-dom';
 const BestSeller = (randomProducts) => {
   return (
     <div className="product-showcase"style={{ border: '1px solid #ddd', padding: '20px' ,borderRadius:"3%"}}>
     <h3 className="showcase-heading">best sellers</h3>
     <div className="showcase-wrapper">
       <div className="showcase-container">
+   
       {randomProducts?.product?.map((product, index) => (
-        <div className="showcase" key={index}>
+          <Link to={`/productDetail/${product.id}`} style={{marginBottom:"20px"}}>
+                <div className="showcase" key={index}>
           <a href="#" className="showcase-img-box">
             <img
               src={product.productImage}
@@ -34,6 +37,8 @@ const BestSeller = (randomProducts) => {
             </div>
           </div>
         </div>
+        </Link>
+      
            ))}
       </div>
     </div>
