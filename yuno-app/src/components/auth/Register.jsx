@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 import styled from "styled-components";
-import Header from "../layout/Header";
+import HeaderOutSide from "../layout/HeaderOutSide"
 import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { Link } from "react-router-dom";
 const Wrapper = styled.section`
@@ -257,9 +257,10 @@ const Register = () => {
 
   return (
     <>
-      <Header />
+      <HeaderOutSide />
+      <ToastContainer/>
       <Wrapper style={{marginTop:"-9%"}}>
-        <ToastContainer/>
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <img
           className="wave"

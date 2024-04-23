@@ -8,7 +8,7 @@ import { ProductContext } from "../context/productContext";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase-config";
-const Header = () => {
+const HeaderOutSide = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [productCart, setProductCart] = useState([]);
@@ -104,52 +104,9 @@ const Header = () => {
             />
           </span>
         </Link>
-        <div className="header-search-container">
-          <input
-            type="search"
-            name="search"
-            className="search-field"
-            placeholder="Search product name..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearch();
-              }
-            }}
-          />
-          <button className="search-btn" onClick={handleSearch}>
-            <FaSearch name="search-outline" />
-          </button>
-        </div>
-        <div className="header-user-actions">
-          <button className="action-btn">
-            {user ? (
-              <Link to={"/profile"}>
-                <FaRegUserCircle
-                  name="person-outline"
-                  style={{ color: "gray" }}
-                />
-              </Link>
-            ) : (
-              <Link to={"/login"} style={{ color: "gray" }}>
-                <FaRegUserCircle />
-              </Link>
-            )}
-          </button>
-          <button className="action-btn">
-            <Link to={user ? "/productCart" : "/login"}>
-              <FaShoppingBag
-                name="bag-handle-outline"
-                style={{ color: "gray" }}
-              />
-              <span className="count">{productCart.length}</span>
-            </Link>
-          </button>
-        </div>
       </div>
     </div>
   );
 };
 
-export default Header;
+export default HeaderOutSide;

@@ -136,8 +136,8 @@ const Profile = () => {
   return (
     <>
       <Header />
+      <ToastContainer />
       <Wapper>
-        <ToastContainer />
         <div className="profile-user" style={{maxWidth:"600px"}}>
           {isEditing ? (
             <form

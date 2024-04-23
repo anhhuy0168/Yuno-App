@@ -4,6 +4,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { Link } from "react-router-dom";
 import { getUserFromLocalStorage } from "../localStorage";
+import HeaderOutSide from "../layout/HeaderOutSide";
 const ChangePass = () => {
   const user = getUserFromLocalStorage()
   const handleSubmit = async (e) => {
@@ -39,6 +40,7 @@ const ChangePass = () => {
   };
   return (
     <>
+    <HeaderOutSide/>
       <ToastContainer />
       <form
         onSubmit={(e) => handleSubmit(e)}
@@ -55,6 +57,7 @@ const ChangePass = () => {
       >
         <input
           required
+          type="email"
           name="email"
           placeholder="Enter email"
           style={{

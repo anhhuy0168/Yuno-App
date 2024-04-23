@@ -17,7 +17,6 @@ import {
   ADDPRODUCTTOCART,
 } from "./constants";
 import { getUserFromLocalStorage } from "../localStorage";
-import { ToastContainer, toast } from 'react-toastify';
 export const CartContext = createContext();
 const CartContextProvider = ({ children }) => {
   const cartCollectionRef = collection(db, "cart");
@@ -56,11 +55,11 @@ const CartContextProvider = ({ children }) => {
         // Cập nhật giỏ hàng với danh sách sản phẩm đã lọc
         const cartDoc = doc(db, "cart", cart.id);
         await updateDoc(cartDoc, { product: updatedProducts });
-        getCart()
+        await getCart()
       }
-      alert("Đã xóa sản phẩm khỏi giỏ hàng thành công!");
+      console.log("Delete Success!");
     } catch (error) {
-      alert("Đã xảy ra lỗi khi xóa sản phẩm khỏi giỏ hàng!");
+      throw(error);
     }
   };
   const editProductCart = async (userId, newProductIds, amount) => {
@@ -101,13 +100,13 @@ const CartContextProvider = ({ children }) => {
           existingProductIds.includes(productId)
         );
         if (isDuplicate) {
-          window.alert("The product already exists in the shopping cart");
+          throw new Error("The product already exists in the shopping cart");
         } else {
           const newProduct = { productIds: newProductIds, amount: amount };
           await updateDoc(cartDoc, {
             product: [...filteredCarts[0].product, newProduct],
           });
-          alert("Added product to cart successfully");
+          throw new Error("Added product to cart successfully");
         }
       } else {
         const newFields = {
@@ -115,10 +114,10 @@ const CartContextProvider = ({ children }) => {
           product: [{ productIds: newProductIds, amount: amount }],
         };
         await addDoc(cartCollectionRef, newFields);
-        alert("Added product to cart successfully!");
+        throw new Error("Added product to cart successfully!");
       }
     } catch (error) {
-      console.log(error);
+      throw(error);
     }
   };
 

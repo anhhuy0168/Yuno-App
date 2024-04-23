@@ -17,7 +17,6 @@ const ProductDeal = ({ product, timeCount }) => {
   const handleAddToCart = async () => {
     if(user==null){
       navigate("/login")
-      alert("Please Login !!!")
     }
     else{
       const productId = selectedProduct?.id;

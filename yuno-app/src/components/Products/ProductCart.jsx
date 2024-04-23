@@ -7,7 +7,7 @@ import Wapper from "../../Style/ProductCartStyle";
 import Header from "../layout/Header";
 import { getUserFromLocalStorage, getInformationUser } from "../localStorage";
 import { useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast, Bounce } from "react-toastify";
 const ProductCart = () => {
   const user = getUserFromLocalStorage();
   const information = getInformationUser();
@@ -46,11 +46,40 @@ const ProductCart = () => {
   const handleBuyProduct = async () => {
     try {
       if (productCart.length === 0) {
-        navigate("/");
-        alert("Please add product !!!");
-      } else if (!information || !information.address || !information.phoneNumber) {
+        toast.warning("Please add product!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+        setTimeout(async () => {
+          navigate("/");
+        }, 2000);
+      } else if (
+        !information ||
+        !information.address ||
+        !information.phoneNumber
+      ) {
         navigate("/profile");
-        alert("Please add information !!!");
+        toast.warning("Please add information !!!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+        setTimeout(async () => {
+          navigate("/profile");
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
@@ -65,23 +94,36 @@ const ProductCart = () => {
     editProductCart(user.uid, productId, newQuantity);
   };
 
-  const removeProductCart = (productId) => {
-    deleteProductCart(user.uid, productId);
+  const removeProductCart = async (productId) => {
+    try {
+      await deleteProductCart(user.uid, productId);
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
+    }
   };
 
   useEffect(() => {
     // Tạo một mảng mới chứa thông tin từ cả productCart và quantity
     const newCombinedData = productCart.map((product, index) => ({
       ...product,
-      amount: quantity[index] || 0
+      amount: quantity[index] || 0,
     }));
     setCombinedData(newCombinedData);
   }, [productCart, quantity]);
-
-  console.log(combinedData);
   return (
     <>
       <Header />
+      <ToastContainer />
       <Wapper>
         <div className="small-container cart-page">
           {productCart.length === 0 && (
@@ -99,12 +141,22 @@ const ProductCart = () => {
                   <tr key={index}>
                     <td>
                       <div className="cart-info">
-                        <img src={product.productImage} width="200px" height="200px" alt={product.productName} />
+                        <img
+                          src={product.productImage}
+                          width="200px"
+                          height="200px"
+                          alt={product.productName}
+                        />
                         <div>
-                          <p style={{fontSize:"13px",marginTop:"10px"}}>{product.productName}</p>
+                          <p style={{ fontSize: "13px", marginTop: "10px" }}>
+                            {product.productName}
+                          </p>
                           <small>Price: ${product.salePrice}</small>
                           <br />
-                          <a style={{ cursor: "pointer" }} onClick={(e) => removeProductCart(product.id)}>
+                          <a
+                            style={{ cursor: "pointer" }}
+                            onClick={(e) => removeProductCart(product.id)}
+                          >
                             Remove
                           </a>
                         </div>
@@ -112,11 +164,13 @@ const ProductCart = () => {
                     </td>
                     <td>
                       <input
-                        style={{fontSize: "13px",width:"50px" }}
+                        style={{ fontSize: "13px", width: "50px" }}
                         type="number"
                         value={quantity[index] || ""}
                         min="1"
-                        onChange={(e) => handleQuantityChange(e, product.id, index)}
+                        onChange={(e) =>
+                          handleQuantityChange(e, product.id, index)
+                        }
                       />
                     </td>
                     <td>${product?.salePrice * (quantity[index] || 0)}</td>
@@ -136,7 +190,9 @@ const ProductCart = () => {
                       {productCart.reduce((total, product, index) => {
                         return (
                           total +
-                          parseFloat(product?.salePrice * (quantity[index] || 0))
+                          parseFloat(
+                            product?.salePrice * (quantity[index] || 0)
+                          )
                         );
                       }, 0)}
                     </td>
@@ -158,7 +214,12 @@ const ProductCart = () => {
                     </td>
                   </tr>
                   {!information ? (
-                    <div onClick={handleBuyProduct} style={{ background: "red", cursor: "pointer" }}>payment</div>
+                    <div
+                      onClick={handleBuyProduct}
+                      style={{ background: "red", cursor: "pointer" }}
+                    >
+                      payment
+                    </div>
                   ) : (
                     <div onClick={handleBuyProduct}>
                       <Payment
@@ -166,7 +227,9 @@ const ProductCart = () => {
                           productCart.reduce((total, product, index) => {
                             return (
                               total +
-                              parseFloat(product.salePrice * (quantity[index] || 0))
+                              parseFloat(
+                                product.salePrice * (quantity[index] || 0)
+                              )
                             );
                           }, 0) + 30
                         }

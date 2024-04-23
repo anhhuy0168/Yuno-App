@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUserFromLocalStorage } from "../localStorage";
+import { getInformationUser } from "../localStorage";
 import styled from "styled-components";
-import Header from "../layout/Header";
+import HeaderOutSide from "../layout/HeaderOutSide"
 const Wrapper = styled.section`
   * {
     padding: 0;
@@ -234,38 +235,41 @@ const Wrapper = styled.section`
     }
   }
 `;
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { Login } = useContext(AuthContext);
-  const user = getUserFromLocalStorage();
+  const { Login} = useContext(AuthContext);
   const signIn = async (e) => {
     e.preventDefault();
     try {
-      if (email || password) {
         await Login(email, password);
-
-        toast.success("Login Success!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Bounce,
-        });
-        setTimeout(async () => {
-          navigate("/");
-        }, 2000);
-      } else {
-        alert("Đã xảy ra lỗi khi đăng nhập");
-      }
+        const user = getInformationUser();
+        if(user!= null){
+          toast.success("Login Success!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          });
+          setTimeout(async () => {
+            navigate("/");
+          }, 2000);
+        }
     } catch (error) {
-      console.error("Đã xảy ra lỗi khi đăng nhập:", error);
+      console.error("An error occurred while logging in:", error);
+    if (error.code === "auth/invalid-credential") {
+      toast.error("Incorrect email or password!");
+    } else if (error.code === "auth/user-not-found") {
+      toast.error("Account not found!");
+    } else {
+      toast.error("An error occurred while logging!");
+    }
     }
   };
   const handleLoginSuccess = (userData) => {
@@ -307,9 +311,10 @@ const Login = () => {
   };
   return (
     <>
-      <Header />
+      <ToastContainer />
+      <HeaderOutSide />
       <Wrapper style={{ marginTop: "-9%" }}>
-        <ToastContainer />
+  
         <img
           className="wave"
           src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1713715988/wave_lphsxx.png"

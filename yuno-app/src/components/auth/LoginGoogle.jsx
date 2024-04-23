@@ -46,14 +46,17 @@ const LoginGoogle = ({ onClick }) => {
         });
     };
     return (
+  <>
+      <ToastContainer />
       <div className="wrapper">
         <div className='box'style={{cursor:"pointer",margin:"20px 10px 10px 10px"}}>
-        <ToastContainer />
+   
         <FaGoogle size={25} onClick={handleGoogleSignIn} >
 
         </FaGoogle>
         </div>
       </div>
+  </>
     );
 }
 export default LoginGoogle

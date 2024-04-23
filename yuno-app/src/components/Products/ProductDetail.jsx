@@ -7,7 +7,6 @@ import { CartContext } from "../context/cartContext";
 import { getUserFromLocalStorage } from "../localStorage";
 import NavBarMobile from "../layout/NavBarMobile";
 import Header from "../layout/Header";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getInformationUser } from "../localStorage";
@@ -19,7 +18,7 @@ const ProductDetail = () => {
   const [amount, setAmount] = useState(1);
   const navigate = useNavigate();
   const userData = getUserFromLocalStorage();
-  const information = getInformationUser();
+  const information = getInformationUser({});
   //PRODUCT CONTEXT
   const {
     productState: { products },
@@ -37,27 +36,72 @@ const ProductDetail = () => {
     }
   };
   const handleAddToCart = async () => {
-    if (user == null) {
-      toast.error("Please Login !!!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
-      setTimeout(async () => {
-        navigate("/login");
-      }, 2000);
-    } else {
-      const productId = selectedProduct?.id;
-      const userId = user.uid;
-      await addProductToCart(userId, productId, amount);
+    try {
+      if (user === null) {
+        toast.error("Please Login !!!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+        setTimeout(async () => {
+          navigate("/login");
+        }, 2000);
+      } else {
+        const productId = selectedProduct?.id;
+        const userId = user.uid;
+        await addProductToCart(userId, productId, amount);
+      }
+    } catch (error) {
+      if(error.message==="The product already exists in the shopping cart"){
+        toast.error(error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+      }
+      else if(error.message==="Added product to cart successfully"){
+        toast.success(error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+      }
+      else{
+        toast.error(error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+      }
+      // Xử lý lỗi từ addProductToCart ở đây
+     
     }
   };
+
   const handleBuyProduct = async () => {
     if (user == null) {
       toast.error("Please Login !!!", {
@@ -126,8 +170,9 @@ const ProductDetail = () => {
   return (
     <>
       <Header />
+      <ToastContainer />
       <Wrapper>
-        <ToastContainer />
+    
         <div className="small-container products-details">
           <div className="row">
             <div className="col-2">
@@ -135,81 +180,91 @@ const ProductDetail = () => {
                 src={selectedProduct?.productImage}
                 width="100%"
                 id="ProductImg"
-                style={{ borderRadius: "30px" ,border:"1px solid deeppink", boxShadow: "0 6px 10px rgba(0, 0, 0, 0.2)",}}
+                style={{
+                  borderRadius: "30px",
+                  border: "1px solid deeppink",
+                  boxShadow: "0 6px 10px rgba(0, 0, 0, 0.2)",
+                }}
               />
             </div>
-            <div className="col-2" style={{justifyContent:"center",alignItems:"center",textAlign:"center"}}>
+            <div
+              className="col-2"
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
               <h1>{selectedProduct?.productName}</h1>
 
               <h4>Price: {selectedProduct?.salePrice}.00$</h4>
-              <div style={{display:"flex",justifyContent:"center"}}>
-              <button
-                onClick={decreaseAmount}
-                style={{
-                  padding: "5px 10px",
-                  fontSize: "16px",
-                  border: "none",
-                  borderRadius: "10px",
-                  cursor: "pointer",
-                  backgroundColor: "deeppink", // Màu đỏ cho nút giảm
-                  color: "#fff", // Màu chữ trắng
-                  marginRight: "10px",
-                }}
-              >
-                -
-              </button>
-              <span style={{marginTop:"5px"}}>
-                {amount}
-              </span>
-              <button
-                onClick={increaseAmount}
-                style={{
-                  padding: "5px 10px",
-                  fontSize: "16px",
-                  border: "none",
-                  borderRadius: "10px",
-                  cursor: "pointer",
-                  backgroundColor: "deeppink", // Màu xanh cho nút tăng
-                  color: "#fff", // Màu chữ trắng
-                  marginLeft: "10px",
-                }}
-              >
-                +
-              </button>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <button
+                  onClick={decreaseAmount}
+                  style={{
+                    padding: "5px 10px",
+                    fontSize: "16px",
+                    border: "none",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    backgroundColor: "deeppink", // Màu đỏ cho nút giảm
+                    color: "#fff", // Màu chữ trắng
+                    marginRight: "10px",
+                  }}
+                >
+                  -
+                </button>
+                <span style={{ marginTop: "5px" }}>{amount}</span>
+                <button
+                  onClick={increaseAmount}
+                  style={{
+                    padding: "5px 10px",
+                    fontSize: "16px",
+                    border: "none",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    backgroundColor: "deeppink", // Màu xanh cho nút tăng
+                    color: "#fff", // Màu chữ trắng
+                    marginLeft: "10px",
+                  }}
+                >
+                  +
+                </button>
               </div>
-           <div style={{display:"flex",justifyContent:"center"}}>
-           <a
-                href="#"
-                className="btn"
-                onClick={handleAddToCart}
-                style={{ marginRight: "10px" }}
-              >
-                <FaCartPlus />
-              </a>
-              {userData?.address == null && userData?.phoneNumber == null ? (
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <a
+                  href="#"
                   className="btn"
-                  onClick={handleBuyProduct}
-                  style={{ cursor: "pointer" }}
+                  onClick={handleAddToCart}
+                  style={{ marginRight: "10px" }}
                 >
-                  Buy
+                  <FaCartPlus />
                 </a>
-              ) : (
-                <a
-                  className="btn"
-                  onClick={handleBuyProduct}
-                  style={{ cursor: "pointer", marginLeft: "10px" }}
-                >
-                  Buy
-                </a>
-              )}
+                {userData?.address == null &&
+                userData?.phoneNumber == null &&
+                userData == null ? (
+                  <a
+                    className="btn"
+                    onClick={handleBuyProduct}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Buy
+                  </a>
+                ) : (
+                  <a
+                    className="btn"
+                    onClick={handleBuyProduct}
+                    style={{ cursor: "pointer", marginLeft: "10px" }}
+                  >
+                    Buy
+                  </a>
+                )}
+              </div>
 
-           </div>
-      
-              <h3 style={{textAlign:"center",paddingLeft:"20px"}}>
+              <h3 style={{ textAlign: "center", paddingLeft: "20px" }}>
                 Product Details: <i className="fa fa-indent" />
               </h3>
-              <p style={{ textAlign:"center",padding:"20px 20px"}}>
+              <p style={{ textAlign: "center", padding: "20px 20px" }}>
                 Cake can also be a bride to help you solve misunderstandings,
                 you can "take advantage of" inherent sweetness to soothe your
                 temper, shorten the distance for you to be close to each other,

@@ -19,7 +19,6 @@ const AuthContextProvider = ({ children }) => {
       listUser: [],
     });
     const dataUser = getUserFromLocalStorage()
-    const [users, setUsers] = useState([]);
     const getUser = async () => {
       const usersCollectionRef = collection(db, "users");
       const data = await getDocs(usersCollectionRef);
@@ -56,15 +55,7 @@ const AuthContextProvider = ({ children }) => {
             dispatch({ type: GET_USER_SUCCESS, payload: user });
           }
         } catch (error) {
-          // Xử lý lỗi từ hàm signInWithEmailAndPassword
-          if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
-            // Xử lý trường hợp người dùng nhập sai email hoặc mật khẩu ở đây
-            alert("Email or password is incorrect");
-            dispatch({ type: USER_LOGIN_FAIL, error: "Email or password is incorrect" });
-          } else {
-            // Xử lý các trường hợp lỗi khác
-            dispatch({ type: USER_LOGIN_FAIL, error: "An error occurred while logging in" });
-          }
+          throw error; 
         }
       };
   const productContextData = {

@@ -5,8 +5,8 @@ import Stripe from "stripe";
 import { db } from "../../firebase-config";
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast,Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Payment = ({ total, productCart }) => {
   // console.log(productCart);
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ const Payment = ({ total, productCart }) => {
           address: user.address,
           phoneNumber: user.phoneNumber,
         });
-        toast.success('Done! Please Check Your Payment History', {
+        toast.success("Done! Please Check Your Payment History", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -101,12 +101,12 @@ const Payment = ({ total, productCart }) => {
           progress: undefined,
           theme: "colored",
           transition: Bounce,
-          });
+        });
         setTimeout(async () => {
           navigate("/profile");
-       }, 3000); 
+        }, 3000);
       } else {
-        const arrayData = Object.values({productCart});
+        const arrayData = Object.values({ productCart });
         const productObject = arrayData.reduce((obj, product, index) => {
           obj[index] = product;
           return obj;
@@ -119,9 +119,9 @@ const Payment = ({ total, productCart }) => {
           uid: user.uid,
           address: user.address,
           phoneNumber: user.phoneNumber,
-          amount:productCart.amount
+          amount: productCart.amount,
         });
-        toast.success('Done! Please Check Your Payment History', {
+        toast.success("Done! Please Check Your Payment History", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -131,10 +131,10 @@ const Payment = ({ total, productCart }) => {
           progress: undefined,
           theme: "colored",
           transition: Bounce,
-          });
+        });
         setTimeout(async () => {
           navigate("/profile");
-       }, 3000); 
+        }, 3000);
       }
       return charge;
     } catch (error) {
@@ -144,29 +144,35 @@ const Payment = ({ total, productCart }) => {
   };
 
   return (
-    <div className="App">
-      <ToastContainer/>
-      <StripeCheckout
-        stripeKey={
-          "pk_test_51LbyNZFYvAR2okGPyqpV3A7965cBfOXkgkSBZTI2op80xFJdjHwHCOCsV2EGBdldK2jZMQS3mGHEhbCq9rSS8eLG00SEJdxO3x"
-        }
-        name="Yuno App"
-        email="info@yunoApp.com"
-        token={handleToken}
-        currency="USD"
-        amount={total * 100}
-      >
-        <button  style={{
-                      color: "#007bff",
-                      padding: "5px 0px",
-                      border: "none",
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                      background: "none",
-                      fontSize: "20px",
-                    }}>Payment</button>
-      </StripeCheckout>
-    </div>
+    <>
+      <ToastContainer />
+      <div className="App">
+        <StripeCheckout
+          stripeKey={
+            "pk_test_51LbyNZFYvAR2okGPyqpV3A7965cBfOXkgkSBZTI2op80xFJdjHwHCOCsV2EGBdldK2jZMQS3mGHEhbCq9rSS8eLG00SEJdxO3x"
+          }
+          name="Yuno App"
+          email="info@yunoApp.com"
+          token={handleToken}
+          currency="USD"
+          amount={total * 100}
+        >
+          <button
+            style={{
+              color: "#007bff",
+              padding: "5px 0px",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              background: "none",
+              fontSize: "20px",
+            }}
+          >
+            Payment
+          </button>
+        </StripeCheckout>
+      </div>
+    </>
   );
 };
 
