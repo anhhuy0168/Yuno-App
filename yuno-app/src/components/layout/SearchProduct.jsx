@@ -64,7 +64,7 @@ const SearchProduct = () => {
               </div>
             </div>
           ) : (
-            <p style={{ textAlign: "center" }}>Không có sản phẩm nào phù hợp</p>
+            <p style={{ textAlign: "center",margin:"30px" }}>No products matched...</p>
           )}
         </div>
       </main>

@@ -138,18 +138,17 @@ const Profile = () => {
       <Header />
       <Wapper>
         <ToastContainer />
-        <div className="profile-user">
+        <div className="profile-user" style={{maxWidth:"600px"}}>
           {isEditing ? (
             <form
               onSubmit={handleSubmit}
               style={{
-                backgroundColor: "#C0C0C0",
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
                 borderRadius: "10px",
-                padding: "20px",
+                padding: "30px",
               }}
             >
-              <label style={{ display: "block", marginBottom: "10px" }}>
+              <label style={{ display: "block", marginBottom: "10px" ,fontSize:"14px"}}>
                 Display name:
               </label>
               <input
@@ -164,10 +163,12 @@ const Profile = () => {
                   borderRadius: "5px",
                   paddingLeft: "10px",
                   height: "35px",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                  fontSize:"14px"
                 }}
               />
 
-              <label style={{ display: "block", marginBottom: "10px" }}>
+              <label style={{ display: "block", marginBottom: "10px" ,fontSize:"14px"}}>
                 Phone Number:
               </label>
               <input
@@ -182,10 +183,12 @@ const Profile = () => {
                   borderRadius: "5px",
                   paddingLeft: "10px",
                   height: "35px",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                  fontSize:"14px"
                 }}
               />
 
-              <label style={{ display: "block", marginBottom: "10px" }}>
+              <label style={{ display: "block", marginBottom: "10px" ,fontSize:"14px"}}>
                 Address:
               </label>
               <input
@@ -200,6 +203,8 @@ const Profile = () => {
                   borderRadius: "5px",
                   paddingLeft: "10px",
                   height: "35px",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                  fontSize:"14px"
                 }}
               />
 
@@ -210,7 +215,7 @@ const Profile = () => {
                   marginTop: "20px",
                 }}
               >
-                <button type="button" onClick={() => navigate(0)}>
+                <button style={{cursor:"pointer"}} type="button" onClick={() => navigate(0)}>
                   Back
                 </button>
                 <button

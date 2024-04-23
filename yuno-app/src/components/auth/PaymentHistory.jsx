@@ -32,7 +32,7 @@ const PaymentHistory = () => {
     <>
       <Header />
       <Wrapper>
-        <div className="order-container">
+        <div className="order-container" style={{margin:"30px 0 30px 0"}}>
           <table>
             <thead>
               <tr>
@@ -46,7 +46,7 @@ const PaymentHistory = () => {
             <tbody>
               {orders.map((order, index) => (
                 <tr key={index}>
-                  <td>{order.id}</td>
+                  <td style={{fontSize:"8px",fontWeight:500}}>{order.id}</td>
                   <td>{order.address}</td>
                   <td>
                     {/* Loop through the products of the current order */}
@@ -85,7 +85,7 @@ const PaymentHistory = () => {
                     ))}
                   </td>
                   <td>{order.total}$</td>
-                  <td>
+                  <td style={{color:"#FFCC00"}}> 
                     {order.status === "pending" ? "Pending" : "Completed"}
                   </td>
                 </tr>
