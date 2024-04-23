@@ -4,6 +4,7 @@ import styled from "styled-components";
 import HeaderOutSide from "../layout/HeaderOutSide"
 import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Wrapper = styled.section`
   * {
     padding: 0;
@@ -234,25 +235,45 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { Register } = useContext(AuthContext);
+  const navigate = useNavigate()
   const signUp = async (e) => {
     e.preventDefault();
-    if (confirmPassword === password) {
-     await Register(email, password);
-     toast.success('Register Success!', {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Bounce,
-      });
-      setTimeout(async () => {
-        navigate("/login");
-      }, 2000);
+    try {
+      if (confirmPassword === password) {
+        await Register(email, password);
+       }
+    } catch (error) {
+      if(error.message==="Register successfully"){
+        toast.success('Register successfully', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+          });
+          setTimeout(async () => {
+            navigate("/login");
+          }, 2000);
+      }
+      else{
+        toast.error("Email Already in Use ", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+          });
+      }
     }
+  
   };
 
   return (

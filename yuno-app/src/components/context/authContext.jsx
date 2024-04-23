@@ -30,8 +30,9 @@ const AuthContextProvider = ({ children }) => {
     const Register = async (email,password) => {
         try {
             await createUserWithEmailAndPassword(auth, email, password)
+            throw new Error("Register successfully");
         } catch (error) {
-          alert(error);
+          throw(error);
         }
       };
       const Login = async (email, password) => {
@@ -48,11 +49,18 @@ const AuthContextProvider = ({ children }) => {
             const data = await getDocs(usersCollectionRef);
             const dataProducts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
             const productIds = dataProducts.filter((user) => user.uid === dataUser?.uid);
-            
-            localStorage.setItem("informationUser", JSON.stringify(productIds[0]));
+            if (productIds.length > 0) {
+              localStorage.setItem(
+                "informationUser",
+                JSON.stringify(productIds[0])
+              );
+            } else {
+              localStorage.setItem("informationUser", JSON.stringify({}));
+            }
             localStorage.setItem('user', JSON.stringify(user));
             dispatch({ type: USER_LOGIN_SUCCESS, payload: userCredential });
             dispatch({ type: GET_USER_SUCCESS, payload: user });
+
           }
         } catch (error) {
           throw error; 

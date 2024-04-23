@@ -6,10 +6,9 @@ import LoginGoogle from "./LoginGoogle";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getUserFromLocalStorage } from "../localStorage";
 import { getInformationUser } from "../localStorage";
 import styled from "styled-components";
-import HeaderOutSide from "../layout/HeaderOutSide"
+import HeaderOutSide from "../layout/HeaderOutSide";
 const Wrapper = styled.section`
   * {
     padding: 0;
@@ -238,38 +237,29 @@ const Wrapper = styled.section`
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
   const navigate = useNavigate();
-  const { Login} = useContext(AuthContext);
+  const { Login } = useContext(AuthContext);
   const signIn = async (e) => {
     e.preventDefault();
     try {
-        await Login(email, password);
-        const user = getInformationUser();
-        if(user!= null){
-          toast.success("Login Success!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Bounce,
-          });
-          setTimeout(async () => {
-            navigate("/");
-          }, 2000);
-        }
+      await Login(email, password);
+      const user = getInformationUser();
+      if (user != null) {
+        setIsLoginSuccess(true); // Đặt trạng thái đăng nhập thành công là true
+      }
+             
     } catch (error) {
-      console.error("An error occurred while logging in:", error);
-    if (error.code === "auth/invalid-credential") {
-      toast.error("Incorrect email or password!");
-    } else if (error.code === "auth/user-not-found") {
-      toast.error("Account not found!");
-    } else {
-      toast.error("An error occurred while logging!");
-    }
+      if (error.code === "auth/invalid-credential") {
+        toast.error("Incorrect email or password!");
+        return null
+      } else if (error.code === "auth/user-not-found") {
+        toast.error("Account not found!");
+        return null
+      } else {
+        toast.error("An error occurred while logging!");
+        return null
+      }
     }
   };
   const handleLoginSuccess = (userData) => {
@@ -309,12 +299,16 @@ const Login = () => {
       parent.classList.remove("focus");
     }
   };
+  useEffect(() => {
+    if (isLoginSuccess) {
+      navigate("/"); // Điều hướng sau khi đăng nhập thành công
+    }
+  }, [isLoginSuccess, navigate]);
   return (
     <>
       <ToastContainer />
       <HeaderOutSide />
       <Wrapper style={{ marginTop: "-9%" }}>
-  
         <img
           className="wave"
           src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1713715988/wave_lphsxx.png"
