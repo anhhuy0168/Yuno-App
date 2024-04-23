@@ -1,6 +1,10 @@
 import React from "react";
 import { Carousel } from "antd";
+
 const Navigation = () => {
+  const handleClick = () => {
+    window.scrollTo({ top: 500, behavior: "smooth" })
+  }
   return (
     <>
       <main>
@@ -21,7 +25,7 @@ const Navigation = () => {
                     <p className="banner-text">
                       starting at $ <b>20</b>.00
                     </p>
-                    <a href="#" className="banner-btn">
+                    <a href="#" className="banner-btn" onClick={handleClick}>
                       Shop now
                     </a>
                   </div>
@@ -38,7 +42,7 @@ const Navigation = () => {
                     <p className="banner-text">
                       starting at $ <b>15</b>.00
                     </p>
-                    <a href="#" className="banner-btn">
+                    <a href="#" className="banner-btn" onClick={handleClick}>
                       Shop now
                     </a>
                   </div>
@@ -55,7 +59,7 @@ const Navigation = () => {
                     <p className="banner-text">
                       starting at $ <b>29</b>.99
                     </p>
-                    <a href="#" className="banner-btn">
+                    <a href="#" className="banner-btn" onClick={handleClick}>
                       Shop now
                     </a>
                   </div>

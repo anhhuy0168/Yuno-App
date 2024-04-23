@@ -40,7 +40,7 @@ p{
 }
 .col-2 h1
 {
-    font-size: 50px;
+    font-size: 30px;
     line-height: 60px;
     margin: 25px 0;
 }

@@ -5,7 +5,7 @@ import Header from "../layout/Header";
 import React, { useState, useEffect } from "react";
 import { getUserFromLocalStorage } from "../localStorage";
 import Wapper from "../../Style/Profile";
-import { Skeleton } from 'antd';
+import { Skeleton } from "antd";
 import {
   getDocs,
   addDoc,
@@ -14,7 +14,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase-config";
-import { ToastContainer, toast,Bounce } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from "react-toastify";
 const Profile = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -32,18 +32,18 @@ const Profile = () => {
     const { name, value } = e.target;
     setEditedInfo({ ...editedInfo, [name]: value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (informationUser) {
         //edit information
         const isNameChanged = editedInfo.displayName !== informationUser.name;
-        const isPhoneNumberChanged = editedInfo.phoneNumber !== informationUser.phoneNumber;
+        const isPhoneNumberChanged =
+          editedInfo.phoneNumber !== informationUser.phoneNumber;
         const isAddressChanged = editedInfo.address !== informationUser.address;
-  
+
         if (!isNameChanged && !isPhoneNumberChanged && !isAddressChanged) {
-          toast.error('No Information Changed!!', {
+          toast.error("No Information Changed!!", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -53,7 +53,7 @@ const Profile = () => {
             progress: undefined,
             theme: "colored",
             transition: Bounce,
-            });
+          });
           return; // Không thực hiện thêm bước nào nếu không có thay đổi
         }
         const userDoc = doc(db, "users", informationUser.id);
@@ -80,7 +80,7 @@ const Profile = () => {
           JSON.stringify(informationUser)
         );
       }
-      toast.success('Edit Success!', {
+      toast.success("Edit Success!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -90,11 +90,11 @@ const Profile = () => {
         progress: undefined,
         theme: "colored",
         transition: Bounce,
-        });
-        setTimeout(async () => {
-          navigate(0); 
-       }, 2000); 
-    // Quay lại trang trước đó trong lịch sử duyệt
+      });
+      setTimeout(async () => {
+        navigate(0);
+      }, 2000);
+      // Quay lại trang trước đó trong lịch sử duyệt
     } catch (error) {
       console.log(error);
     }
@@ -137,7 +137,7 @@ const Profile = () => {
     <>
       <Header />
       <Wapper>
-      <ToastContainer />
+        <ToastContainer />
         <div className="profile-user">
           {isEditing ? (
             <form
@@ -216,25 +216,50 @@ const Profile = () => {
                 <button type="button" onClick={() => navigate(0)}>
                   Back
                 </button>
-                <button type="submit">Lưu</button>
+                <button
+                  type="submit"
+                  style={{
+                    color: "#007bff",
+                    padding: "5px 0px",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    background: "none",
+                    fontSize: "smaller",
+                  }}
+                >
+                  Save
+                </button>
               </div>
             </form>
           ) : (
             <>
-
-                <div className="profile-user__info">
-                  <h2 className="profile-user__name">
-                    Name: {informationUser?.name}
-                  </h2>
-                  <p className="profile-user__email">
-                    Email: {user?.email}
-                  </p>
-                  <p className="profile-user__phone">
-                    Phone: {informationUser?.phoneNumber}
-                  </p>
-                  <p className="profile-user__address">
-                    Address: {informationUser?.address}
-                  </p>
+              <div className="profile-user__info" style={{ padding: "20px" }}>
+                <h2 className="profile-user__name">
+                  Name: {informationUser?.name}
+                </h2>
+                <p className="profile-user__email">Email: {user?.email}</p>
+                <p className="profile-user__phone">
+                  Phone: {informationUser?.phoneNumber}
+                </p>
+                <p className="profile-user__address">
+                  Address: {informationUser?.address}
+                </p>
+                <button
+                  style={{
+                    color: "#007bff",
+                    padding: "5px 0px",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    background: "none",
+                    fontSize: "smaller",
+                  }}
+                  onClick={() => setIsEditing(true)}
+                >
+                  Edit
+                </button>
+                <Link to="/changePass" style={{ textDecoration: "none" }}>
                   <button
                     style={{
                       color: "#007bff",
@@ -245,46 +270,14 @@ const Profile = () => {
                       background: "none",
                       fontSize: "smaller",
                     }}
-                    onClick={() => setIsEditing(true)}
                   >
-                    Edit
+                    Change Pass
                   </button>
-                  <Link to="/changePass" style={{ textDecoration: "none" }}>
-                    <button
-                      style={{
-                        color: "#007bff",
-                        padding: "5px 0px",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                        background: "none",
-                        fontSize: "smaller",
-                      }}
-                    >
-                      Change Pass
-                    </button>
-                  </Link>
-                  <Link
-                    to="/paymentHistory"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <button
-                      style={{
-                        color: "#007bff",
-                        padding: "5px 0px",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                        background: "none",
-                        fontSize: "smaller",
-                      }}
-                    >
-                      Order History
-                    </button>
-                  </Link>
+                </Link>
+                <Link to="/paymentHistory" style={{ textDecoration: "none" }}>
                   <button
                     style={{
-                      color: "red",
+                      color: "#007bff",
                       padding: "5px 0px",
                       border: "none",
                       borderRadius: "5px",
@@ -292,12 +285,25 @@ const Profile = () => {
                       background: "none",
                       fontSize: "smaller",
                     }}
-                    onClick={handleLogout}
                   >
-                    Logout
+                    Order History
                   </button>
-                </div>
-           
+                </Link>
+                <button
+                  style={{
+                    color: "red",
+                    padding: "5px 0px",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    background: "none",
+                    fontSize: "smaller",
+                  }}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
             </>
           )}
         </div>

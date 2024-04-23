@@ -6,13 +6,18 @@ import { CartContext } from "../context/cartContext";
 import { useContext } from "react";
 import { ProductContext } from "../context/productContext";
 import { useNavigate } from "react-router-dom";
-
+import {
+  collection,
+  getDocs,
+} from "firebase/firestore";
+import { db } from "../../firebase-config";
 const Header = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [productCart, setProductCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  
+  const dataUser = getUserFromLocalStorage()
+  const usersCollectionRef = collection(db, "users");
 
   const {
     cartState: { cart },
@@ -23,7 +28,22 @@ const Header = () => {
     productState: { products },
     getProduct,
   } = useContext(ProductContext);
-
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const usersCollectionRef = collection(db, "users");
+        const data = await getDocs(usersCollectionRef);
+        const dataProducts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        const productIds = dataProducts.filter((user) => user.uid === dataUser?.uid);
+        localStorage.setItem("informationUser", JSON.stringify(productIds[0]));
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // Handle error gracefully, e.g., show a message to the user
+      }
+    };
+  
+    fetchUserData(); 
+  }, []); 
   useEffect(() => {
     getCart();
     getProduct();

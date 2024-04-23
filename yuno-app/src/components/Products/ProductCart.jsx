@@ -101,7 +101,7 @@ const ProductCart = () => {
                       <div className="cart-info">
                         <img src={product.productImage} width="200px" height="200px" alt={product.productName} />
                         <div>
-                          <p>{product.productName}</p>
+                          <p style={{fontSize:"13px",marginTop:"10px"}}>{product.productName}</p>
                           <small>Price: ${product.salePrice}</small>
                           <br />
                           <a style={{ cursor: "pointer" }} onClick={(e) => removeProductCart(product.id)}>

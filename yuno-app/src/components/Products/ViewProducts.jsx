@@ -87,13 +87,13 @@ const ViewProducts = () => {
           </div>
         </div>
       </div>
-      <div className="product-showcase">
+      <div className="product-showcase" >
         <h2 className="title">Trending</h2>
         <div className="showcase-wrapper has-scrollbar">
           <div className="showcase-container">
             {/* Hiển thị randomProducts2 */}
             {randomProducts2.map((product, index) => (
-              <Link to={`/productDetail/${product.id}`}>
+              <Link to={`/productDetail/${product.id}`} style={{overflow:"hidden"}}>
                 <div
                   className="showcase"
                   key={index}
