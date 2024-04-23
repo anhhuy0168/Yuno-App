@@ -155,7 +155,6 @@ const Profile = () => {
               <input
                 type="text"
                 name="displayName"
-                placeholder="Display name"
                 value={editedInfo?.displayName}
                 onChange={handleInputChange}
                 required
@@ -174,7 +173,6 @@ const Profile = () => {
               <input
                 type="text"
                 name="phoneNumber"
-                placeholder="Phone Number"
                 value={editedInfo?.phoneNumber}
                 onChange={handleInputChange}
                 required
@@ -193,7 +191,6 @@ const Profile = () => {
               <input
                 type="text"
                 name="address"
-                placeholder="Address"
                 value={editedInfo?.address}
                 onChange={handleInputChange}
                 required
