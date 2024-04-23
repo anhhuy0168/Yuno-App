@@ -75,13 +75,13 @@ const Header = () => {
   return (
     <div className="header-main">
       <div className="container">
-        <Link to="/" style={{cursor:"pointer",zIndex:"1"}}>
+        <Link to="/" style={{cursor:"pointer",zIndex:"1" ,display:"flex",justifyContent:"center",alignItems:"center"}}>
           <span href="#" className="header-logo">
             <img
-              src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1712917412/1npjxlfvmb071_wy4r9g.webp"
+              src="https://res.cloudinary.com/da3bmd8ak/image/upload/v1713848213/yuno-high-resolution-logo-transparent_wxv9er.png"
               alt="Anon's logo"
-              width={50}
-              height={50}
+              width={110}
+              height={30}
             />
           </span>
         </Link>

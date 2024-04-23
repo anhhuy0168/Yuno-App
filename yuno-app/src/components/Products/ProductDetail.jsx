@@ -135,27 +135,21 @@ const ProductDetail = () => {
                 src={selectedProduct?.productImage}
                 width="100%"
                 id="ProductImg"
-                style={{ borderRadius: "30px" }}
+                style={{ borderRadius: "30px" ,border:"1px solid deeppink", boxShadow: "0 6px 10px rgba(0, 0, 0, 0.2)",}}
               />
             </div>
-            <div className="col-2">
+            <div className="col-2" style={{justifyContent:"center",alignItems:"center",textAlign:"center"}}>
               <h1>{selectedProduct?.productName}</h1>
 
               <h4>Price: {selectedProduct?.salePrice}.00$</h4>
-              {/* <input
-                type="number"
-                min="1"
-                value={amount === undefined ? '' : amount} // Sử dụng undefined thay vì null
-                onChange={handleChange}
-              /> */}
-              <div style={{display:"flex"}}>
+              <div style={{display:"flex",justifyContent:"center"}}>
               <button
                 onClick={decreaseAmount}
                 style={{
                   padding: "5px 10px",
                   fontSize: "16px",
                   border: "none",
-                  borderRadius: "5px",
+                  borderRadius: "10px",
                   cursor: "pointer",
                   backgroundColor: "deeppink", // Màu đỏ cho nút giảm
                   color: "#fff", // Màu chữ trắng
@@ -173,7 +167,7 @@ const ProductDetail = () => {
                   padding: "5px 10px",
                   fontSize: "16px",
                   border: "none",
-                  borderRadius: "5px",
+                  borderRadius: "10px",
                   cursor: "pointer",
                   backgroundColor: "deeppink", // Màu xanh cho nút tăng
                   color: "#fff", // Màu chữ trắng
@@ -183,8 +177,8 @@ const ProductDetail = () => {
                 +
               </button>
               </div>
-           
-              <a
+           <div style={{display:"flex",justifyContent:"center"}}>
+           <a
                 href="#"
                 className="btn"
                 onClick={handleAddToCart}
@@ -210,10 +204,12 @@ const ProductDetail = () => {
                 </a>
               )}
 
-              <h3>
+           </div>
+      
+              <h3 style={{textAlign:"center",paddingLeft:"20px"}}>
                 Product Details: <i className="fa fa-indent" />
               </h3>
-              <p style={{ paddingRight: "50px" }}>
+              <p style={{ textAlign:"center",padding:"20px 20px"}}>
                 Cake can also be a bride to help you solve misunderstandings,
                 you can "take advantage of" inherent sweetness to soothe your
                 temper, shorten the distance for you to be close to each other,

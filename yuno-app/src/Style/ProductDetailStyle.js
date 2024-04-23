@@ -42,7 +42,7 @@ p{
 {
     font-size: 30px;
     line-height: 60px;
-    margin: 25px 0;
+    margin: 0px 0;
 }
 .btn
 {

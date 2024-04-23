@@ -59,11 +59,11 @@ const AuthContextProvider = ({ children }) => {
           // Xử lý lỗi từ hàm signInWithEmailAndPassword
           if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
             // Xử lý trường hợp người dùng nhập sai email hoặc mật khẩu ở đây
-            alert("Email hoặc mật khẩu không chính xác");
-            dispatch({ type: USER_LOGIN_FAIL, error: "Email hoặc mật khẩu không chính xác" });
+            alert("Email or password is incorrect");
+            dispatch({ type: USER_LOGIN_FAIL, error: "Email or password is incorrect" });
           } else {
             // Xử lý các trường hợp lỗi khác
-            dispatch({ type: USER_LOGIN_FAIL, error: "Đã xảy ra lỗi khi đăng nhập" });
+            dispatch({ type: USER_LOGIN_FAIL, error: "An error occurred while logging in" });
           }
         }
       };

@@ -101,13 +101,13 @@ const CartContextProvider = ({ children }) => {
           existingProductIds.includes(productId)
         );
         if (isDuplicate) {
-          window.alert("Sản phẩm đã tồn tại trong giỏ hàng");
+          window.alert("The product already exists in the shopping cart");
         } else {
           const newProduct = { productIds: newProductIds, amount: amount };
           await updateDoc(cartDoc, {
             product: [...filteredCarts[0].product, newProduct],
           });
-          alert("Thêm sản phẩm vào giỏ hàng thành công");
+          alert("Added product to cart successfully");
         }
       } else {
         const newFields = {
@@ -115,7 +115,7 @@ const CartContextProvider = ({ children }) => {
           product: [{ productIds: newProductIds, amount: amount }],
         };
         await addDoc(cartCollectionRef, newFields);
-        alert("Thêm sản phẩm vào giỏ hàng thành công!");
+        alert("Added product to cart successfully!");
       }
     } catch (error) {
       console.log(error);
