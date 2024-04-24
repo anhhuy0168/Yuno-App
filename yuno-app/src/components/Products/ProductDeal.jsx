@@ -14,20 +14,27 @@ const ProductDeal = ({ product, timeCount }) => {
     getProduct,
   } = useContext(ProductContext);
   const { addProductToCart } = useContext(CartContext);
-  const selectedProduct = products.find((products) => products.id === product[0]?.id);
-  const handleAddToCart = async () => {
+
+  const handleAddToCart = async (id) => {
+    console.log(id);
+    const selectedProduct = products.find((products) => products.id === id);
     if(user==null){
       navigate("/login")
     }
     else{
-
       try {
         const productId = selectedProduct?.id;
         const userId = user.uid;
         const amount = 1
-        await addProductToCart(userId, productId, amount);
+        if(productId){
+
+          await addProductToCart(userId, productId, amount);
+        }
+        else{
+        return null
+        }
+  
       } catch (error) {
-        console.log(error);
         if(error.message==="The product already exists in the shopping cart"){
           toast.error(error.message, {
             position: "top-right",
@@ -114,7 +121,7 @@ const ProductDeal = ({ product, timeCount }) => {
               </p>
               <del>${product[0]?.currentPrice}</del>
             </div>
-            <button className="add-cart-btn" onClick={handleAddToCart}>add to cart</button>
+            <button className="add-cart-btn"onClick={() => handleAddToCart(product[0]?.id)}>add to cart</button>
             <div className="showcase-status">
               <div className="wrapper">
                 <p>
@@ -184,7 +191,7 @@ const ProductDeal = ({ product, timeCount }) => {
               </p>
               <del>${product[1]?.currentPrice}</del>
             </div>
-            <button className="add-cart-btn">add to cart</button>
+            <button className="add-cart-btn" onClick={() => handleAddToCart(product[1]?.id)}>add to cart</button>
             <div className="showcase-status">
               <div className="wrapper">
                 <p>
