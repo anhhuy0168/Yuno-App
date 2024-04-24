@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { ProductContext } from '../context/productContext';
 import { CartContext } from '../context/cartContext';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast, Bounce } from "react-toastify";
 const ProductDeal = ({ product, timeCount }) => {
   const navigate = useNavigate()
   const [user, setUser] = useState(null);
@@ -19,10 +20,54 @@ const ProductDeal = ({ product, timeCount }) => {
       navigate("/login")
     }
     else{
-      const productId = selectedProduct?.id;
-      const userId = user.uid;
-      const amount = 1
-      await addProductToCart(userId, productId, amount);
+
+      try {
+        const productId = selectedProduct?.id;
+        const userId = user.uid;
+        const amount = 1
+        await addProductToCart(userId, productId, amount);
+      } catch (error) {
+        console.log(error);
+        if(error.message==="The product already exists in the shopping cart"){
+          toast.error(error.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          });
+        }
+        else if(error.message==="Added product to cart successfully"){
+          toast.success(error.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          });
+        }
+        else{
+          toast.error(error.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          });
+        }
+      }
     }
 
   };
@@ -31,6 +76,8 @@ const ProductDeal = ({ product, timeCount }) => {
     setUser(userFromLocalStorage);
   }, []);
   return (
+    <>
+    <ToastContainer/>
     <div className="product-featured">
     <h2 className="title">Deal of the day</h2>
     <div className="showcase-wrapper has-scrollbar">
@@ -177,6 +224,8 @@ const ProductDeal = ({ product, timeCount }) => {
       </div>
     </div>
   </div>
+    </>
+
   )
 }
 
